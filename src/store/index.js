@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+//Import VUEX modules below
+import sample_index from './modules/sample-index';
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,5 +14,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    sample_index
   }
 })

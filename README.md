@@ -5,12 +5,17 @@
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Run app on your android device
+```
+yarn dev
+```
+
+### Compiles and hot-reloads for development in your browser
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Compiles and minifies for production use
 ```
 yarn build
 ```
@@ -18,11 +23,6 @@ yarn build
 ### Lints and fixes files
 ```
 yarn lint
-```
-
-### Run app on your android device
-```
-yarn dev
 ```
 
 ### Customize configuration
