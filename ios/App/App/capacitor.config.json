@@ -1,0 +1,6 @@
+{
+  "appId": "com.grapherson",
+  "appName": "Grapherson",
+  "bundledWebRuntime": false,
+  "webDir": "dist"
+}
