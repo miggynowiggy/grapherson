@@ -11,10 +11,14 @@ npm install -g yarn
 yarn install
 
 # Add native project folder for Android devices
-yarn cap add android
+vue add capacitor
 
-# (For users with Mac OS) Add native project folder for iOS devices
-yarn cap add ios
+- Choose Target Platforms: <press 'a' on your keyboard>
+- Your App's Name: Grapherson
+- Your App's ID: com.grapherson
+
+# Add Icon and Splash Screens
+yarn generate-icon-splash
 ```
 
 ### Run app on android device
