@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "capacitor:build": "vue-cli-service capacitor:build",
     "capacitor:serve": "vue-cli-service capacitor:serve",
-    "dev": "yarn cap copy && vue-cli-service capacitor:serve --android"
+    "dev": "yarn cap copy && vue-cli-service capacitor:serve --android",
+    "dev-ios": "yarn cap copy && vue-cli-service capacitor:serve --ios"
   },
   "dependencies": {
     "@capacitor/android": "^2.0.0",
