@@ -1,6 +1,6 @@
 # Grapherson
 A Software Engineering porject submission
-This is a movile app that tries to assess for Mental Health ailements or disorders through your handwrittings.
+This is a mobile app that tries to assess for Mental Health ailements or disorders through your handwrittings.
 
 ## Project setup
 ```
