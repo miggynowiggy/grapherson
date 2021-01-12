@@ -8460,8 +8460,8 @@ vm-browserify@^1.0.1:
 
 vue-cli-plugin-capacitor@~2.0.1:
   version "2.0.1"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-capacitor/-/vue-cli-plugin-capacitor-2.0.1.tgz#728eda05d1829bf7275bab589f3cc98fb3b359c5"
-  integrity sha512-64+gNrmrx2b0W07tsuPHmxkvOf0qzK6fisc/8B8Poi7Cx5bgyFzUA4IgI/bOh4wTiz1771xvxI5TY28JGAsdLg==
+  resolved "https://registry.npm.taobao.org/vue-cli-plugin-capacitor/download/vue-cli-plugin-capacitor-2.0.1.tgz#728eda05d1829bf7275bab589f3cc98fb3b359c5"
+  integrity sha1-co7aBdGCm/cnW6tYnzzJj7OzWcU=
   dependencies:
     "@vue/cli-shared-utils" "^4.5.4"
     address "^1.0.3"
