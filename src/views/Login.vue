@@ -1,6 +1,6 @@
 <template>
-    <v-app class="ma-5 pa-5 overflow-auto">
-        <v-container fill-height fluid content = "height=device-height">
+    <v-app class="ma-5 pa-5">
+        <v-container fill-height fluid>
         <v-row
           align="center"
           justify="center"
