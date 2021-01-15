@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 const vuetify = new Vuetify({
+    icons: {
+      iconfont: 'md' || 'mdi' || 'fa'
+    },
     theme: {
       themes: {
         light: {
@@ -11,7 +15,7 @@ const vuetify = new Vuetify({
         },
       },
     },
-  })
+});
 
 Vue.use(Vuetify);
 

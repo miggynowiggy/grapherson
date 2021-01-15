@@ -19,7 +19,7 @@
         filled
         rounded
         outlined
-        :append-icon="showPassword ? 'eye' : 'eye-off'"
+        :append-icon="showPassword ? 'visibility' : 'visibility_off'"
         :type="showPassword ? 'text' : 'password'"
         @click:append="showPassword = !showPassword"
       ></v-text-field>
