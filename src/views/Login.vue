@@ -13,6 +13,7 @@
         filled
         rounded
         outlined
+        color="secondary"
       ></v-text-field>
       <v-text-field
         label="Password"
@@ -22,7 +23,49 @@
         :append-icon="showPassword ? 'visibility' : 'visibility_off'"
         :type="showPassword ? 'text' : 'password'"
         @click:append="showPassword = !showPassword"
+        color="secondary"
       ></v-text-field>
+      <v-col
+        cols="12"
+        sm="6"
+      >
+        <v-btn
+          class = "mb-3 font-weight-black"
+          block
+          x-large
+          color="secondary"
+          rounded
+          :disabled="buttonDisabled"
+          :loading="buttonDisabled"
+        >
+          LOGIN
+        </v-btn>
+        <v-btn
+          class = "mb-3 font-weight-black"
+          block
+          x-large
+          color="secondary"
+          rounded
+          outlined
+          :disabled="buttonDisabled"
+          :loading="buttonDisabled" 
+          @click="signup"
+        >
+          SIGN-UP
+        </v-btn>
+        <v-btn
+          class="text-decoration-underline font-weight-black"
+          block
+          x-large
+          color="secondary"
+          rounded
+          plain 
+          :disabled="buttonDisabled"
+          :loading="buttonDisabled"
+        >
+          PROCEED AS GUEST
+        </v-btn>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -32,7 +75,15 @@
 export default {
   name: 'Login',
   data: () => ({
-    showPassword: false
-  })
+    showPassword: false,
+    buttonDisabled: false
+  }),
+  methods: {
+    async signup () {
+      this.buttonDisabled = true;
+      this.$router.push({ name: 'Signup' });
+      this.loginButtonDisabled = false;
+    }
+  },
 }
 </script>
