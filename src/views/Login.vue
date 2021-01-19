@@ -7,32 +7,35 @@
       <v-avatar tile size = 100px class = "mb-10">
         <img alt='Grapherson' src='../assets/Grapherson.png'/>
       </v-avatar>
-      <v-text-field
-        label="Email Address"
-        type="email"
-        filled
-        rounded
-        outlined
-        color="secondary"
-      ></v-text-field>
-      <v-text-field
-        label="Password"
-        filled
-        rounded
-        outlined
-        :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-        :type="showPassword ? 'text' : 'password'"
-        @click:append="showPassword = !showPassword"
-        color="secondary"
-      ></v-text-field>
+      <v-form>
+        <v-text-field
+          label="Email Address"
+          type="email"
+          v-model="email"
+          filled
+          rounded
+          outlined
+          color="secondary"
+        ></v-text-field>
+        <v-text-field
+          label="Password"
+          v-model="password"
+          filled
+          rounded
+          outlined
+          :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPassword = !showPassword"
+          color="secondary"
+        ></v-text-field>
+      </v-form>
       <v-col
-        cols="12"
-        sm="6"
+        align = "center"
       >
         <v-btn
           class = "mb-3 font-weight-black"
-          block
-          x-large
+          width="200"
+          large
           color="secondary"
           rounded
           :disabled="buttonDisabled"
@@ -42,8 +45,8 @@
         </v-btn>
         <v-btn
           class = "mb-3 font-weight-black"
-          block
-          x-large
+          width="200"
+          large
           color="secondary"
           rounded
           outlined
