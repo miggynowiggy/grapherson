@@ -42,6 +42,7 @@
           rounded
           :disabled="buttonDisabled"
           :loading="buttonDisabled"
+          @click="login"
         >
           LOGIN
         </v-btn>
@@ -98,10 +99,15 @@ export default {
     ],
   }),
   methods: {
-      async signUp(choice) {
-        this.buttonDisabled = true;
-        this.$router.push({ name: 'Signup', params: {typeOfUser: choice}});
-        this.loginButtonDisabled = false;
+    async signUp(choice) {
+      this.buttonDisabled = true;
+      this.$router.push({ name: 'Signup', params: {typeOfUser: choice}});
+      this.loginButtonDisabled = false;
+    },
+    async login(){
+      this.buttonDisabled = true;
+      this.$router.push({ name: 'Home' });
+      this.loginButtonDisabled = false;
     }
   },
 }
