@@ -1,72 +1,110 @@
 <template>
-  <v-container fluid pa-10>
-    <v-row>
-      <div class = "headline secondary--text text-center font-weight-black mb-10 mt-5">
-        PERSONAL DETAILS
-      </div>
-      <v-text-field
-        label = "Name / Nickname"
-        type = "name"
-        filled
-        rounded
-        outlined
-        color = "secondary"
-      ></v-text-field>
-      <v-text-field
-        label = "Age"
-        type = "age"
-        filled
-        rounded
-        outlined
-        color = "secondary"
-      ></v-text-field>
-      <v-radio-group
-        v-model="gender"
-        column
-      >
-        <p class = "font-weight-black gray--text">Gender:</p>
-        <v-radio
-          label="Female"
-          color="secondary"
-          value="female"
-        ></v-radio>
-        <v-radio
-          label="Male"
-          color="secondary"
-          value="male"
-        ></v-radio>
-        <v-radio
-          label="Prefer not to say"
-          color="secondary"
-          value="others"
-        ></v-radio>
-      </v-radio-group>
-    </v-row>
+  <v-container>
+    <personal-details 
+      v-if="signUpStep === 1" 
+      @nameChange="getNameValue" 
+      @ageChange="getAgeValue" 
+      @genderChange="getGenderValue"
+    />
+    <login-details 
+      v-else 
+      @emailChange="getEmailValue" 
+      @passwordChange="getPasswordValue" 
+      @confirmPasswordChange="getConfirmPasswordValue"
+    />    
     <v-row
-      style = "height: 150px"
       justify = "center"
-      align = "end"
     >
       <v-btn
-        class = "mb-3 font-weight-black"
-        block
+        class = "mb-5 font-weight-black"
+        width="200"
         large
         color="secondary"
         rounded
         :disabled="buttonDisabled"
         :loading="buttonDisabled"
+        @click="proceed"
       >
-        next
+        <span v-if="typeOfUser === 'user' && signUpStep === 1">Next</span>
+        <span v-else>Proceed</span>
+      </v-btn>
+      <v-btn
+        class = "font-weight-black"
+        width="200"
+        large
+        color="secondary"
+        rounded
+        outlined
+        :disabled="buttonDisabled"
+        :loading="buttonDisabled"
+        @click="back"
+      >
+        <span v-if="typeOfUser === 'user' && signUpStep === 2">Back</span>
+        <span v-else>Cancel</span>
       </v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script>
-
+import PersonalDetails from '../components/PersonalDetails.vue'
+import LoginDetails from '../components/LoginDetails.vue'
 export default {
   name: 'Signup',
-  data: () => ({}),
-    methods: {},
+  components: { PersonalDetails, LoginDetails },
+  data: () => ({
+    name: null,
+    age: null,
+    gender: null,
+    email: null,
+    password: null,
+    confirmPassword: null,
+    typeOfUser: null,
+    signUpStep: 1,
+    buttonDisabled: false,
+  }),
+  created() {
+    this.typeOfUser = this.$route.params.typeOfUser;
+  },
+  methods: {
+    async proceed(){
+      if(!this.name || !this.age || !this.gender)
+        return
+      else if(this.typeOfUser === 'user'){
+        if(this.signUpStep === 1)
+            this.signUpStep = 2
+        else if(!this.email || !this.password || !this.confirmPassword)
+          return
+        else
+          this.$router.push({ name: 'Home'});
+      }
+      else
+        this.$router.push({ name: 'Home'});
+    },
+    async back(){
+      if(this.typeOfUser === 'user' && this.signUpStep === 2)
+        this.signUpStep = 1
+      else
+        this.$router.push({ name: 'Login'});
+    },
+    getNameValue(value){
+      this.name = value;
+    },
+    getAgeValue(value){
+      this.age = value;
+    },
+    getGenderValue(value){
+      this.gender = value;
+    },
+    getEmailValue(value){
+      this.email = value;
+    },
+    getPasswordValue(value){
+      this.password = value;
+    },
+    getConfirmPasswordValue(value){
+      this.confirmPassword = value;
+    }
+  },
 }
-</script>
+</script>PersonalDetails

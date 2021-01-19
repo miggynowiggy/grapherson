@@ -12,6 +12,7 @@
           label="Email Address"
           type="email"
           v-model="email"
+          :rules="emailRules"
           filled
           rounded
           outlined
@@ -20,6 +21,7 @@
         <v-text-field
           label="Password"
           v-model="password"
+          :rules="passwordRules"
           filled
           rounded
           outlined
@@ -52,19 +54,20 @@
           outlined
           :disabled="buttonDisabled"
           :loading="buttonDisabled" 
-          @click="signup"
+          @click="signUp('user')"
         >
           SIGN-UP
         </v-btn>
         <v-btn
           class="text-decoration-underline font-weight-black"
-          block
-          x-large
+          width="200"
+          large
           color="secondary"
           rounded
           plain 
           :disabled="buttonDisabled"
           :loading="buttonDisabled"
+          @click="signUp('guest')"
         >
           PROCEED AS GUEST
         </v-btn>
@@ -78,14 +81,27 @@
 export default {
   name: 'Login',
   data: () => ({
+    email: null,
+    password: null,
     showPassword: false,
-    buttonDisabled: false
+    buttonDisabled: false,
+    choice: null,
+
+    
+    emailRules: [
+			v => !!v || 'E-mail is required',
+      v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+    ],
+		passwordRules: [
+			v => !!v || 'This field is required',
+      v => (v && v.length >= 6) || 'Minimum of 6 characters',
+    ],
   }),
   methods: {
-    async signup () {
-      this.buttonDisabled = true;
-      this.$router.push({ name: 'Signup' });
-      this.loginButtonDisabled = false;
+      async signUp(choice) {
+        this.buttonDisabled = true;
+        this.$router.push({ name: 'Signup', params: {typeOfUser: choice}});
+        this.loginButtonDisabled = false;
     }
   },
 }
