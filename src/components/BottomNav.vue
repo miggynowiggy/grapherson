@@ -8,7 +8,7 @@
 					</v-btn>
 				</v-col>
 				<v-col cols="6">
-					<v-btn class="secondary--text" width="10" height="58" plain block>
+					<v-btn class="secondary--text" width="10" height="58" plain block disabled>
 						<v-icon large>settings</v-icon>
 					</v-btn>
 				</v-col>
