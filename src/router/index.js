@@ -6,8 +6,28 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: () => import('@/views/Login.vue')
+  },
+  {
+    path: '/signup/:typeOfUser',
+    name: 'Signup',
+    component: () => import('@/views/Signup.vue')
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: () => import('@/views/Home.vue')
+  },
+  {
+    path: '/records',
+    name: 'Records',
+    component: () => import('@/views/Records.vue')
+  },
+  {
+    path: '/view-records',
+    name: 'ViewRecord',
+    component: () => import('@/views/ViewRecord.vue')
   }
 ]
 
