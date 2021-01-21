@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn plain class="mx-3 my-5" @click="$router.go(-1)">
+    <v-btn plain class="mx-3 my-5" @click="$router.push({ name: 'Home' })">
       <v-icon large>arrow_back</v-icon>
     </v-btn>
     <v-card
