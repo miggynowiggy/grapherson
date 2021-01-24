@@ -4,7 +4,7 @@
 			<v-row align="center" justify="center">
 				<v-col cols="6">
 					<v-btn
-						class="secondary--text"
+						class="primary--text"
 						width="10"
 						height="58"
 						plain
@@ -16,7 +16,7 @@
 				</v-col>
 				<v-col cols="6">
 					<v-btn
-						class="secondary--text"
+						class="primary--text"
 						width="10"
 						height="58"
 						plain
@@ -28,7 +28,7 @@
 				</v-col>
 			</v-row>
 		</v-bottom-navigation>
-		<v-btn class="big-btn" x-large fab elevation="6" color="secondary">
+		<v-btn class="big-btn" x-large fab depressed elevation="6" color="primary">
 			<v-icon large>camera_alt</v-icon>
 		</v-btn>
 	</div>
