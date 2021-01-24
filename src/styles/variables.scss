@@ -1,0 +1,20 @@
+$body-font-family: "Poppins", sans-serif;
+$font-weights: (
+	"semibold": 600,
+	"extrabold": 800,
+);
+$headings: (
+	"body-2": (
+		"line-height": 1.5rem,
+	),
+	"body-1": (
+		"line-height": 1.75rem,
+	),
+	"subtitle-2": (
+		"line-height": 1.625rem,
+	),
+	"subtitle-1": (
+		"line-height": 2rem,
+	),
+);
+$card-border-radius: 15px;
