@@ -3,12 +3,26 @@
 		<v-bottom-navigation app fixed grow height="60">
 			<v-row align="center" justify="center">
 				<v-col cols="6">
-					<v-btn class="secondary--text" width="10" height="58" plain block @click="$router.push({ name: 'Records' })">
+					<v-btn
+						class="secondary--text"
+						width="10"
+						height="58"
+						plain
+						block
+						@click="$router.push({ name: 'Records' })"
+					>
 						<v-icon large>receipt_long</v-icon>
 					</v-btn>
 				</v-col>
 				<v-col cols="6">
-					<v-btn class="secondary--text" width="10" height="58" plain block disabled>
+					<v-btn
+						class="secondary--text"
+						width="10"
+						height="58"
+						plain
+						block
+						disabled
+					>
 						<v-icon large>settings</v-icon>
 					</v-btn>
 				</v-col>
