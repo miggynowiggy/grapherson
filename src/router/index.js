@@ -34,6 +34,11 @@ const routes = [
 		name: "Settings",
 		component: () => import("@/views/Settings.vue"),
 	},
+	{
+		path: "/analyze",
+		name: "Analyze",
+		component: () => import("@/views/AnalyzeHandwriting.vue"),
+	},
 ];
 
 const router = new VueRouter({
