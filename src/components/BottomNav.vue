@@ -35,7 +35,7 @@
 				this.$router.push({ name: "Records" });
 			},
 			goToHome() {
-				this.$router.push({ name: "Home" });
+				this.$router.push({ name: "Analyze" });
 			},
 			goToSettings() {
 				this.$router.push({ name: "Settings" });
