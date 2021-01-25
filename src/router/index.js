@@ -1,40 +1,45 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/',
-    name: 'Login',
-    component: () => import('@/views/Login.vue')
-  },
-  {
-    path: '/signup/:typeOfUser',
-    name: 'Signup',
-    component: () => import('@/views/Signup.vue')
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: () => import('@/views/Home.vue')
-  },
-  {
-    path: '/records',
-    name: 'Records',
-    component: () => import('@/views/Records.vue')
-  },
-  {
-    path: '/view-records',
-    name: 'ViewRecord',
-    component: () => import('@/views/ViewRecord.vue')
-  }
-]
+	{
+		path: "/",
+		name: "Login",
+		component: () => import("@/views/Login.vue"),
+	},
+	{
+		path: "/signup/:typeOfUser",
+		name: "Signup",
+		component: () => import("@/views/Signup.vue"),
+	},
+	{
+		path: "/home",
+		name: "Home",
+		component: () => import("@/views/Home.vue"),
+	},
+	{
+		path: "/records",
+		name: "Records",
+		component: () => import("@/views/Records.vue"),
+	},
+	{
+		path: "/view-records",
+		name: "ViewRecord",
+		component: () => import("@/views/ViewRecord.vue"),
+	},
+	{
+		path: "/settings",
+		name: "Settings",
+		component: () => import("@/views/Settings.vue"),
+	},
+];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
+	mode: "history",
+	base: process.env.BASE_URL,
+	routes,
+});
 
-export default router
+export default router;

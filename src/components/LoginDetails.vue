@@ -1,48 +1,54 @@
 <template>
 	<v-container fluid pa-10>
-		<v-row>
-			<div
-				class="headline secondary--text text-center font-weight-black mb-10 mt-5"
-			>
-				LOGIN DETAILS
-			</div>
-			<v-form>
-				<v-text-field
-					label="Email"
-					type="email"
-					v-model="email"
-					:rules="emailRules"
-					filled
-					rounded
-					outlined
-					color="secondary"
-				></v-text-field>
-				<v-text-field
-					label="Password"
-					v-model="password"
-					:rules="passwordRules"
-					filled
-					rounded
-					outlined
-					:append-icon="showPassword ? 'visibility' : 'visibility_off'"
-					:type="showPassword ? 'text' : 'password'"
-					@click:append="showPassword = !showPassword"
-					color="secondary"
-				></v-text-field>
-				<v-text-field
-					label="Confirm Password"
-					v-model="confirmPassword"
-					:rules="confirmPasswordRules"
-					filled
-					rounded
-					outlined
-					:append-icon="showConfirmPassword ? 'visibility' : 'visibility_off'"
-					:type="showConfirmPassword ? 'text' : 'password'"
-					@click:append="showConfirmPassword = !showConfirmPassword"
-					color="secondary"
-				></v-text-field>
-			</v-form>
-		</v-row>
+		<v-form>
+			<v-row wrap align="center" justify="center">
+				<div
+					class="headline secondary--text text-center font-weight-black mb-10 mt-5"
+				>
+					LOGIN DETAILS
+				</div>
+				<v-col cols="11">
+					<v-text-field
+						label="Email"
+						type="email"
+						v-model="email"
+						:rules="emailRules"
+						filled
+						rounded
+						outlined
+						color="primary"
+					></v-text-field>
+				</v-col>
+				<v-col cols="11">
+					<v-text-field
+						label="Password"
+						v-model="password"
+						:rules="passwordRules"
+						filled
+						rounded
+						outlined
+						:append-icon="showPassword ? 'visibility' : 'visibility_off'"
+						:type="showPassword ? 'text' : 'password'"
+						@click:append="showPassword = !showPassword"
+						color="primary"
+					></v-text-field>
+				</v-col>
+				<v-col cols="11">
+					<v-text-field
+						label="Confirm Password"
+						v-model="confirmPassword"
+						:rules="confirmPasswordRules"
+						filled
+						rounded
+						outlined
+						:append-icon="showConfirmPassword ? 'visibility' : 'visibility_off'"
+						:type="showConfirmPassword ? 'text' : 'password'"
+						@click:append="showConfirmPassword = !showConfirmPassword"
+						color="primary"
+					></v-text-field>
+				</v-col>
+			</v-row>
+		</v-form>
 	</v-container>
 </template>
 
