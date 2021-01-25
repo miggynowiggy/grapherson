@@ -1,55 +1,59 @@
 <template>
-	<v-container fill-height fluid class="login-bg">
-		<v-row align="center" justify="center">
-			<personal-details
-				v-if="signUpStep === 1"
-				@nameChange="getNameValue"
-				@ageChange="getAgeValue"
-				@genderChange="getGenderValue"
-			/>
-			<login-details
-				v-else
-				@emailChange="getEmailValue"
-				@passwordChange="getPasswordValue"
-				@confirmPasswordChange="getConfirmPasswordValue"
-			/>
-		</v-row>
-		<v-row wrap align="start" justify="center" class="mt-n4">
-			<v-col cols="10">
-				<v-btn
-					class="font-weight-black"
-					width="200"
-					large
-					color="primary"
-					rounded
-					block
-					:disabled="buttonDisabled"
-					:loading="buttonDisabled"
-					@click="proceed"
-				>
-					<span v-if="typeOfUser === 'user' && signUpStep === 1">Next</span>
-					<span v-else>Proceed</span>
-				</v-btn>
-			</v-col>
-			<v-col cols="10" class="mt-2">
-				<v-btn
-					class="font-weight-black"
-					width="200"
-					large
-					color="primary"
-					rounded
-					outlined
-					block
-					:disabled="buttonDisabled"
-					:loading="buttonDisabled"
-					@click="back"
-				>
-					<span v-if="typeOfUser === 'user' && signUpStep === 2">Back</span>
-					<span v-else>Cancel</span>
-				</v-btn>
-			</v-col>
-		</v-row>
-	</v-container>
+	<v-app>
+		<v-main>
+			<v-container fill-height fluid class="login-bg">
+				<v-row align="center" justify="center">
+					<personal-details
+						v-if="signUpStep === 1"
+						@nameChange="getNameValue"
+						@ageChange="getAgeValue"
+						@genderChange="getGenderValue"
+					/>
+					<login-details
+						v-else
+						@emailChange="getEmailValue"
+						@passwordChange="getPasswordValue"
+						@confirmPasswordChange="getConfirmPasswordValue"
+					/>
+				</v-row>
+				<v-row wrap align="start" justify="center" class="mt-n4">
+					<v-col cols="10">
+						<v-btn
+							class="font-weight-black"
+							width="200"
+							large
+							color="primary"
+							rounded
+							block
+							:disabled="buttonDisabled"
+							:loading="buttonDisabled"
+							@click="proceed"
+						>
+							<span v-if="typeOfUser === 'user' && signUpStep === 1">Next</span>
+							<span v-else>Proceed</span>
+						</v-btn>
+					</v-col>
+					<v-col cols="10" class="mt-2">
+						<v-btn
+							class="font-weight-black"
+							width="200"
+							large
+							color="primary"
+							rounded
+							outlined
+							block
+							:disabled="buttonDisabled"
+							:loading="buttonDisabled"
+							@click="back"
+						>
+							<span v-if="typeOfUser === 'user' && signUpStep === 2">Back</span>
+							<span v-else>Cancel</span>
+						</v-btn>
+					</v-col>
+				</v-row>
+			</v-container>
+		</v-main>
+	</v-app>
 </template>
 
 <script>

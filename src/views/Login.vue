@@ -1,89 +1,93 @@
 <template>
-	<v-container class="login-bg" fill-height fluid pa-10>
-		<v-form lazy-validation v-model="isFormValid">
-			<v-row align="center" justify="center" wrap>
-				<v-col cols="12" align="center">
-					<v-avatar tile size="150px" class="mb-10">
-						<img alt="Grapherson" src="../assets/Grapherson.png" />
-					</v-avatar>
-				</v-col>
-				<v-col cols="12">
-					<v-text-field
-						label="Email Address"
-						type="email"
-						v-model="email"
-						:rules="emailRules"
-						filled
-						rounded
-						outlined
-						color="primary"
-					></v-text-field>
-				</v-col>
-				<v-col cols="12" class="mt-n5">
-					<v-text-field
-						label="Password"
-						v-model="password"
-						:rules="passwordRules"
-						filled
-						rounded
-						outlined
-						:append-icon="showPassword ? 'visibility' : 'visibility_off'"
-						:type="showPassword ? 'text' : 'password'"
-						@click:append="showPassword = !showPassword"
-						color="primary"
-					></v-text-field>
-				</v-col>
-				<v-col cols="10">
-					<v-btn
-						class="mb-3 font-weight-black"
-						width="200"
-						large
-						color="primary"
-						depressed
-						rounded
-						block
-						:disabled="buttonDisabled"
-						:loading="buttonDisabled"
-						@click="login"
-					>
-						LOGIN
-					</v-btn>
-				</v-col>
-				<v-col cols="10" class="mt-n4">
-					<v-btn
-						class="mb-3 font-weight-black"
-						width="200"
-						large
-						color="primary"
-						rounded
-						outlined
-						block
-						:disabled="buttonDisabled"
-						:loading="buttonDisabled"
-						@click="signUp('user')"
-					>
-						SIGN-UP
-					</v-btn>
-				</v-col>
-				<v-col cols="10" class="mt-n4">
-					<v-btn
-						class="text-decoration-underline font-weight-black"
-						width="200"
-						large
-						color="primary"
-						rounded
-						plain
-						block
-						:disabled="buttonDisabled"
-						:loading="buttonDisabled"
-						@click="signUp('guest')"
-					>
-						PROCEED AS GUEST
-					</v-btn>
-				</v-col>
-			</v-row>
-		</v-form>
-	</v-container>
+	<v-app>
+		<v-main>
+			<v-container class="login-bg" fill-height fluid pa-10>
+				<v-form lazy-validation v-model="isFormValid">
+					<v-row align="center" justify="center" wrap>
+						<v-col cols="12" align="center">
+							<v-avatar tile size="150px" class="mb-10">
+								<img alt="Grapherson" src="../assets/Grapherson.png" />
+							</v-avatar>
+						</v-col>
+						<v-col cols="12">
+							<v-text-field
+								label="Email Address"
+								type="email"
+								v-model="email"
+								:rules="emailRules"
+								filled
+								rounded
+								outlined
+								color="primary"
+							></v-text-field>
+						</v-col>
+						<v-col cols="12" class="mt-n5">
+							<v-text-field
+								label="Password"
+								v-model="password"
+								:rules="passwordRules"
+								filled
+								rounded
+								outlined
+								:append-icon="showPassword ? 'visibility' : 'visibility_off'"
+								:type="showPassword ? 'text' : 'password'"
+								@click:append="showPassword = !showPassword"
+								color="primary"
+							></v-text-field>
+						</v-col>
+						<v-col cols="10">
+							<v-btn
+								class="mb-3 font-weight-black"
+								width="200"
+								large
+								color="primary"
+								depressed
+								rounded
+								block
+								:disabled="buttonDisabled"
+								:loading="buttonDisabled"
+								@click="login"
+							>
+								LOGIN
+							</v-btn>
+						</v-col>
+						<v-col cols="10" class="mt-n4">
+							<v-btn
+								class="mb-3 font-weight-black"
+								width="200"
+								large
+								color="primary"
+								rounded
+								outlined
+								block
+								:disabled="buttonDisabled"
+								:loading="buttonDisabled"
+								@click="signUp('user')"
+							>
+								SIGN-UP
+							</v-btn>
+						</v-col>
+						<v-col cols="10" class="mt-n4">
+							<v-btn
+								class="text-decoration-underline font-weight-black"
+								width="200"
+								large
+								color="primary"
+								rounded
+								plain
+								block
+								:disabled="buttonDisabled"
+								:loading="buttonDisabled"
+								@click="signUp('guest')"
+							>
+								PROCEED AS GUEST
+							</v-btn>
+						</v-col>
+					</v-row>
+				</v-form>
+			</v-container>
+		</v-main>
+	</v-app>
 </template>
 
 <script>
