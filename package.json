@@ -8,8 +8,8 @@
     "lint": "vue-cli-service lint",
     "capacitor:build": "vue-cli-service capacitor:build",
     "capacitor:serve": "vue-cli-service capacitor:serve",
-    "dev": "vue-cli-service capacitor:serve --android",
-    "dev-ios": "vue-cli-service capacitor:serve --ios",
+    "dev": "yarn cap copy && vue-cli-service capacitor:serve --android",
+    "dev-ios": "yarn cap copy && vue-cli-service capacitor:serve --ios",
     "generate-icon-splash": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "@capacitor/ios": "^2.0.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
+    "lottie-player-vue": "^0.0.16",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
