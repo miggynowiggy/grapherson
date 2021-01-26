@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<v-main>
-			<v-container fluid pa-0 fill-height class="login-bg">
+			<v-container fluid pa-0 fill-height>
 				<v-row wrap align="start" justify="center">
 					<v-col cols="12" align="center">
 						<lottie-player
