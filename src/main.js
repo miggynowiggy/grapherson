@@ -6,6 +6,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import { Plugins } from "@capacitor/core";
 const { StatusBar, Device } = Plugins;
+import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import LottiePlayer from "lottie-player-vue";
 
 Vue.config.productionTip = false;
@@ -24,3 +25,5 @@ new Vue({
 	vuetify,
 	render: (h) => h(App),
 }).$mount("#app");
+
+defineCustomElements(window);

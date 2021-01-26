@@ -17,7 +17,7 @@ export default {
 	actions: {
 		async takePicture({ commit }) {
 			const image = await Camera.getPhoto({
-				source: "PROMPT",
+				source: "CAMERA",
 				quality: 90,
 				resultType: CameraResultType.DataUrl,
 			});
