@@ -86,7 +86,8 @@
 			},
 			async openCamera() {
 				const result = await this.$store.dispatch("plugins/takePicture");
-				console.log(result);
+				this.$store.commit("plugins/SET_CAPTURED_PHOTO", result);
+				this.$router.push({ name: "Process" });
 			},
 		},
 	};
