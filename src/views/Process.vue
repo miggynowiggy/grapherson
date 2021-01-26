@@ -27,7 +27,7 @@
 	export default {
 		name: "Process",
 		async mounted() {
-			await this.$store.dispatch("plugins/UPLOAD_IMAGE");
+			await this.$store.dispatch("plugins/upload_image");
 			setInterval(() => {
 				this.showNextMessage();
 			}, 6000);
