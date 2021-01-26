@@ -1,5 +1,7 @@
 <template>
-	<router-view></router-view>
+	<transition :name="transitionMode">
+		<router-view></router-view>
+	</transition>
 </template>
 
 <script>
@@ -7,10 +9,16 @@
 		name: "App",
 
 		components: {},
-
 		data: () => ({
-			//
+			transitionMode: "slide-right",
 		}),
+		watch: {
+			$route(to, from) {
+				if (from.name === "Analyze" && to.name === "Process") {
+					this.transitionMode = "slide-left";
+				}
+			},
+		},
 	};
 </script>
 <style>
