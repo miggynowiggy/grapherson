@@ -1,5 +1,9 @@
 import { cloneDeep } from "lodash";
+import { DB } from "@/config/firebase";
 
+function generateNumber(min, max) {
+	return Math.random() * (max - min) + min;
+}
 export default {
 	namespaced: true,
 	state: {
@@ -34,6 +38,23 @@ export default {
 		},
 		CLEAR_CURRENT_RECORD(state) {
 			state.currentRecord = null;
+		},
+	},
+	actions: {
+		async generateRandomData() {
+			for (let count = 0; count < 10; count++) {
+				const dummy = {
+					stability: generateNumber(1, 10),
+					willPower: generateNumber(1, 10),
+					modesty: generateNumber(1, 10),
+					flexibility: generateNumber(1, 10),
+					lackDiscipline: generateNumber(1, 10),
+					poorConcentration: generateNumber(1, 10),
+					isolation: generateNumber(1, 10),
+				};
+
+				await DB.collection("dummy_data").add(dummy);
+			}
 		},
 	},
 };

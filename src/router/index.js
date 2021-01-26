@@ -37,7 +37,12 @@ const routes = [
 	{
 		path: "/analyze",
 		name: "Analyze",
-		component: () => import("@/views/AnalyzeHandwriting.vue"),
+		component: () => import("@/views/Analyze.vue"),
+	},
+	{
+		path: "/process",
+		name: "Process",
+		component: () => import("@/views/Process.vue"),
 	},
 ];
 

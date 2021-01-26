@@ -1,30 +1,38 @@
 import { Plugins, CameraResultType } from "@capacitor/core";
-const { Camera, Filesystem } = Plugins;
-
+// import { DB, STORAGE } from "../../config/firebase";
+const { Camera } = Plugins;
 export default {
 	namespaced: true,
-	actions: {
-		async takePicture() {
-			const image = await Camera.getPhoto({
-				source: "CAMERA",
-				quality: 90,
-				resultType: CameraResultType.Uri,
-			});
-			const imageContent = await Filesystem.readFile({
-				path: image.webPath,
-			});
-			return imageContent;
+	state: {
+		capturePhoto: null,
+	},
+	getters: {
+		CAPTURE_PHOTO: (state) => state.capturePhoto,
+	},
+	mutations: {
+		SET_CAPTURED_PHOTO(state, payload) {
+			state.capturePhoto = payload;
 		},
-		async getGalleryPhoto() {
+	},
+	actions: {
+		async takePicture({ commit }) {
+			const image = await Camera.getPhoto({
+				source: "PROMPT",
+				quality: 90,
+				resultType: CameraResultType.DataUrl,
+			});
+			commit("SET_CAPTURES_PHOTO", image);
+			return image;
+		},
+		async getGalleryPhoto({ commit }) {
 			const image = await Camera.getPhoto({
 				source: "PHOTOS",
 				quality: 90,
-				resultType: CameraResultType.Uri,
+				resultType: CameraResultType.DataUrl,
 			});
-			const imageContent = await Filesystem.readFile({
-				path: image.webPath,
-			});
-			return imageContent;
+			commit("SET_CAPTURED_PHOTO", image);
+			return image;
 		},
+		async upload_image() {},
 	},
 };
