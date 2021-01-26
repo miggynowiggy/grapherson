@@ -51,5 +51,6 @@
 	.main {
 		max-height: 81vh;
 		overflow-y: scroll;
+		scroll-behavior: smooth;
 	}
 </style>
