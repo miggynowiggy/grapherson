@@ -48,13 +48,40 @@
 							rounded
 							block
 							x-large
-							@click="openCamera"
+							@click="bottomSheet = true"
 						>
 							<span class="font-weight-bold">LETS CAPTURE!</span>
 						</v-btn>
 					</v-col>
 				</v-row>
 			</v-container>
+			<v-bottom-sheet v-model="bottomSheet">
+				<v-list>
+					<v-subheader>
+						Image Source?
+						<v-spacer />
+						<v-btn small icon @click="bottomSheet = false">
+							<v-icon>close</v-icon>
+						</v-btn>
+					</v-subheader>
+					<v-list-item @click="takeImage('camera')">
+						<v-list-item-avatar>
+							<v-avatar>
+								<v-icon>camera_alt</v-icon>
+							</v-avatar>
+						</v-list-item-avatar>
+						<v-list-item-title>Camera</v-list-item-title>
+					</v-list-item>
+					<v-list-item @click="takeImage('gallery')">
+						<v-list-item-avatar>
+							<v-avatar>
+								<v-icon>collections</v-icon>
+							</v-avatar>
+						</v-list-item-avatar>
+						<v-list-item-title>Photo Gallery</v-list-item-title>
+					</v-list-item>
+				</v-list>
+			</v-bottom-sheet>
 		</v-main>
 	</v-app>
 </template>
@@ -77,6 +104,7 @@
 		},
 		data: () => ({
 			currentFrame: 0,
+			bottomSheet: false,
 		}),
 		methods: {
 			nextFrame() {
@@ -84,9 +112,13 @@
 					this.currentFrame++;
 				}
 			},
-			async openCamera() {
-				const result = await this.$store.dispatch("plugins/takePicture");
-				this.$store.commit("plugins/SET_CAPTURED_PHOTO", result);
+			async takeImage(mode) {
+				this.bottomSheet = false;
+				if (mode === "camera") {
+					await this.$store.dispatch("plugins/takePicture");
+				} else {
+					await this.$store.dispatch("plugins/getGalleryPhoto");
+				}
 				this.$router.push({ name: "Process" });
 			},
 		},
