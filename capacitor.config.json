@@ -1,6 +1,11 @@
 {
   "appId": "com.grapherson",
   "appName": "Grapherson",
-  "bundledWebRuntime": false,
-  "webDir": "dist"
+  "bundledWebRuntime": true,
+  "webDir": "dist",
+  "plugins": {
+    "Keyboard": {
+      "resize": "body"
+    }
+  }
 }
