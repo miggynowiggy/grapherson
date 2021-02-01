@@ -4,6 +4,7 @@
 			<v-row align="center" justify="center">
 				<v-col cols="12" align="center">
 					<lottie-player
+						ref="lottieAnimation"
 						:src="require('@/assets/lottiefiles/penpaper.json')"
 						:options="animOptions"
 					/>
@@ -28,19 +29,19 @@
 				</v-col>
 			</v-row>
 		</v-card-text>
-	</v-card>
-</template>
+	</v-card></template
+>
 
 <script>
 	export default {
 		name: "PenPaper",
-		components: {},
 		data: () => ({
 			animOptions: {
 				autoplay: true,
 				speed: 0.5,
 				loop: true,
 				renderer: "svg",
+				width: "250px",
 			},
 		}),
 		methods: {},

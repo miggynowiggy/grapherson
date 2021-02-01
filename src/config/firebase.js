@@ -20,6 +20,7 @@ if (!firebase.apps.length) {
 }
 
 export const AUTH = firebase.auth();
+export const GOOGLE_PROVIDER = new firebase.auth.GoogleAuthProvider();
 export const DB = firebase.firestore();
 export const STORAGE = firebase.storage();
 export const FUNCTIONS = firebase.functions();

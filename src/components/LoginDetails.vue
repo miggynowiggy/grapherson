@@ -56,9 +56,9 @@
 	export default {
 		name: "Signup",
 		data: () => ({
-			email: null,
-			password: null,
-			confirmPassword: null,
+			email: "",
+			password: "",
+			confirmPassword: "",
 			showPassword: false,
 			showConfirmPassword: false,
 

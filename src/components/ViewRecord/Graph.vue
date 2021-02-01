@@ -10,23 +10,25 @@
 					/>
 				</v-avatar>
 			</v-col>
-			<v-col cols="11" align="center">
-				<h1 class="headline secondary--text mt-3">
+			<v-col cols="10" align="center">
+				<h1 class="headline primary--text mt-3">
 					YOU'RE AN ABSOLUTE INTROVERT!
 				</h1>
 			</v-col>
-			<v-col cols="12" align="center">
-				<v-card width="320" rounded color="#EAE2FF" class="my-3">
-					<v-col cols="10" v-for="result in results" :key="result.name">
-						<v-progress-linear
-							class="mt-1"
-							color="secondary"
-							rounded
-							height="10"
-							:value="result.value"
-						></v-progress-linear>
-						<p>{{ result.value }}% {{ result.name }}</p>
-					</v-col>
+			<v-col cols="11" justify="center" align="center">
+				<v-card rounded color="secondary darken-2" elevation="5" class="pa-4">
+					<v-row align="center" justify="center" wrap>
+						<v-col cols="11" v-for="result in results" :key="result.name">
+							<v-progress-linear
+								class="mt-1"
+								color="secondary"
+								rounded
+								height="10"
+								:value="result.value"
+							></v-progress-linear>
+							<p>{{ result.value }}% {{ result.name }}</p>
+						</v-col>
+					</v-row>
 				</v-card>
 			</v-col>
 		</v-row>

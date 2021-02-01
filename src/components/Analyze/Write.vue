@@ -25,16 +25,6 @@
 <script>
 	export default {
 		name: "PenPaper",
-		components: {},
-		data: () => ({
-			animOptions: {
-				autoplay: true,
-				speed: 0.5,
-				loop: true,
-				renderer: "svg",
-			},
-		}),
-		methods: {},
 	};
 </script>
 

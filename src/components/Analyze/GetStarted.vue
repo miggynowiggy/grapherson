@@ -4,6 +4,7 @@
 			<v-row align="center" justify="center">
 				<v-col cols="12" align="center">
 					<lottie-player
+						ref="lottieAnimation"
 						:src="require('@/assets/lottiefiles/handwriting.json')"
 						:options="animOptions"
 					/>
@@ -41,6 +42,7 @@
 				speed: 0.5,
 				loop: true,
 				renderer: "svg",
+				width: "250px",
 			},
 		}),
 		methods: {

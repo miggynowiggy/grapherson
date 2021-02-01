@@ -10,9 +10,14 @@ const routes = [
 		component: () => import("@/views/Login.vue"),
 	},
 	{
-		path: "/signup/:typeOfUser",
+		path: "/signup",
 		name: "Signup",
 		component: () => import("@/views/Signup.vue"),
+	},
+	{
+		path: "/signup/guest",
+		name: "GuestSignIn",
+		component: () => import("@/views/GuestSignIn.vue"),
 	},
 	{
 		path: "/home",
@@ -43,6 +48,16 @@ const routes = [
 		path: "/process",
 		name: "Process",
 		component: () => import("@/views/Process.vue"),
+	},
+	{
+		path: "/edit-details",
+		name: "EditDetails",
+		component: () => import("@/views/EditDetails.vue"),
+	},
+	{
+		path: "/change-pass",
+		name: "ChangePassword",
+		component: () => import("@/views/ChangePassword.vue"),
 	},
 ];
 

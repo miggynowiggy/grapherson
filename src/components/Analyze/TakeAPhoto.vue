@@ -4,6 +4,7 @@
 			<v-row align="center" justify="center">
 				<v-col cols="12" align="center">
 					<lottie-player
+						ref="lottieAnimation"
 						:src="require('@/assets/lottiefiles/capture.json')"
 						:options="animOptions"
 					/>

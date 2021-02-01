@@ -1,5 +1,5 @@
 <template>
-	<v-snackbar v-model="notifState" :timeout="3500" :color="type" left top>
+	<v-snackbar v-model="notifState" :timeout="4500" :color="type" top right>
 		<span class="body-2">{{ message }}</span>
 	</v-snackbar>
 </template>

@@ -3,8 +3,12 @@
 		<v-main>
 			<v-container fluid>
 				<v-row justify="center">
-					<v-avatar tile size="300px">
-						<img src="../assets/avatars/moustache.png" alt="avatar" />
+					<v-avatar tile size="200">
+						<v-img
+							:src="require('@/assets/avatars/moustache.png')"
+							contain
+							alt="avatar"
+						/>
 					</v-avatar>
 				</v-row>
 				<v-row justify="center">

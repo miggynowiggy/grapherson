@@ -1,17 +1,27 @@
+/* eslint-disable no-empty-pattern */
 import { Plugins, CameraResultType } from "@capacitor/core";
-// import { DB, STORAGE } from "../../config/firebase";
+import { STORAGE } from "../../config/firebase";
+import { nanoid } from "nanoid";
 const { Camera } = Plugins;
+
+const bucket = STORAGE.ref("grapherson").child("records");
+
 export default {
 	namespaced: true,
 	state: {
 		capturePhoto: null,
+		deviceId: null,
 	},
 	getters: {
 		CAPTURE_PHOTO: (state) => state.capturePhoto,
+		DEVICE_ID: (state) => state.deviceId,
 	},
 	mutations: {
 		SET_CAPTURED_PHOTO(state, payload) {
 			state.capturePhoto = payload;
+		},
+		SET_DEVICE_UUID(state, payload) {
+			state.deviceId = payload;
 		},
 	},
 	actions: {
@@ -20,6 +30,7 @@ export default {
 				source: "CAMERA",
 				quality: 90,
 				resultType: CameraResultType.DataUrl,
+				format: "jpeg",
 			});
 			commit("SET_CAPTURES_PHOTO", image);
 			return image;
@@ -29,10 +40,22 @@ export default {
 				source: "PHOTOS",
 				quality: 90,
 				resultType: CameraResultType.DataUrl,
+				format: "jpeg",
 			});
 			commit("SET_CAPTURED_PHOTO", image);
 			return image;
 		},
-		async upload_image() {},
+		async upload_image({ state }) {
+			const uploadedFile = await bucket
+				.child(`${nanoid()}.jpg`)
+				.putString(state.currentImage, "data_url");
+			const downloadUrl = await uploadedFile.getDownloadURL();
+			return downloadUrl;
+		},
+		async delete_image({}, downloadURL) {
+			const fileReference = STORAGE.refFromURL(downloadURL);
+			await fileReference.delete();
+			return true;
+		},
 	},
 };

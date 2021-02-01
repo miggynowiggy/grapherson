@@ -1,10 +1,11 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib/framework";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+import "font-awesome/css/font-awesome.min.css";
 
 const vuetify = new Vuetify({
 	icons: {
-		iconfont: "md" || "mdi" || "fa",
+		iconfont: "md" || "fa",
 	},
 	theme: {
 		themes: {

@@ -4,27 +4,28 @@
 		<v-main>
 			<v-container fluid>
 				<v-carousel
-					v-model="recordStep"
-					:show-arrows="false"
-					:hide-delimiters="true"
-					:cycle="false"
+					v-model="currentFrame"
+					:show-arrows="!$vuetify.breakpoint.mobile"
 					:continuous="false"
+					:hide-delimiter-background="true"
+					:hide-delimiters="true"
 					height="100%"
+					dark
 				>
 					<v-carousel-item>
-						<handwriting />
+						<Handwriting :downloadURL="record.downloadURL" />
 					</v-carousel-item>
 					<v-carousel-item>
-						<graph />
+						<Graph />
 					</v-carousel-item>
 					<v-carousel-item>
-						<result />
+						<Result />
 					</v-carousel-item>
 				</v-carousel>
 				<v-row
 					align="center"
 					justify="center"
-					class="mt-5"
+					class="mt-8"
 					v-if="recordStep < 2"
 				>
 					<p class="font-italic primary--text">
@@ -44,6 +45,7 @@
 	export default {
 		components: { Handwriting, Graph, Result, AppBar },
 		data: () => ({
+			currentFrame: 0,
 			recordStep: 0,
 			title: null,
 		}),
