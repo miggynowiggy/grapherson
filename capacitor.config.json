@@ -3,9 +3,11 @@
   "appName": "Grapherson",
   "bundledWebRuntime": true,
   "webDir": "dist",
+  "npmClient": "yarn",
   "plugins": {
     "Keyboard": {
       "resize": "body"
     }
-  }
+  },
+  "backgroundColor": "#00B882"
 }
