@@ -16,7 +16,7 @@ export default {
 	},
 	getters: {
 		USER: (state) => state.user,
-		IS_USER_SIGNED_IN: (state) => Boolean(state.user.id),
+		IS_USER_SIGNED_IN: () => Boolean(AUTH.currentUser.uid),
 	},
 	mutations: {
 		SET_USER_ID(state, payload) {
