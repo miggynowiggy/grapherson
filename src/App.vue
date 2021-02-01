@@ -10,12 +10,12 @@
 
 		components: {},
 		data: () => ({
-			transitionMode: "slide-right",
+			transitionMode: "scroll-right",
 		}),
 		watch: {
 			$route(to, from) {
 				if (from.name === "Analyze" && to.name === "Process") {
-					this.transitionMode = "slide-left";
+					this.transitionMode = "scroll-left";
 				}
 			},
 		},
