@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-useless-catch */
 import { AUTH, DB, FB } from "@/config/firebase";
 
@@ -112,6 +113,21 @@ export default {
 		},
 		async deleteAccount() {
 			console.log("waw delete");
+		},
+		async store_guest({ state, dispatch }) {
+			await dispatch(
+				"plugins/set_to_storage",
+				{ key: "guestDetails", value: state.user },
+				{ root: true }
+			);
+			return true;
+		},
+		async get_guest({ dispatch, commit }) {
+			const guest = await dispatch("plugins/get_in_storage", "guestDetails", {
+				root: true,
+			});
+			commit("SET_USER", guest);
+			return guest?.name ? true : false;
 		},
 	},
 };

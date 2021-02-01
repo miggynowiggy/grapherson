@@ -42,7 +42,13 @@ AUTH.onAuthStateChanged(async (user) => {
 			vuetify,
 			render: (h) => h(App),
 		}).$mount("#app");
-		router.push({ name: "Login" });
+
+		const isGuestFound = await store.dispatch("auth/get_guest");
+		if (isGuestFound) {
+			router.push({ name: "Home" });
+		} else {
+			router.push({ name: "Login" });
+		}
 	}
 });
 

@@ -1,35 +1,38 @@
 /* eslint-disable no-useless-catch */
 import { cloneDeep } from "lodash";
 import { DB } from "@/config/firebase";
+import days from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+days.extend(advancedFormat);
 
 function generateNumber(min, max) {
 	const num = Math.random() * (max - min) + min;
 	return num.toFixed(2);
 }
 
+function generateInt(min, max) {
+	return Math.floor(Math.random() * (max - min) + min);
+}
+
 export default {
 	namespaced: true,
 	state: {
-		records: [
-			{ title: "When I was sad", date: "01-20-2021" },
-			{ title: "When I was your men", date: "12-23-2021" },
-			{ title: "I talked to my crush", date: "11-10-2020" },
-			{ title: "Burned Out", date: "10-12-2020" },
-			{ title: "Ate a delicious dinner", date: "10-12-2020" },
-			{ title: "Dinner date with Crush", date: "10-12-2020" },
-			{ title: "Biked around the subdivision", date: "10-12-2020" },
-			{ title: "Grab some Drink at SB", date: "10-12-2020" },
-		],
+		records: [],
+		dummies: [],
 		currentRecord: {
 			date: null,
 			title: null,
+			findings: null,
+			interpretation: null,
+			ratings: {},
 		},
-		dummies: [],
+		cameraEnabled: true,
 	},
 	getters: {
 		ALL_RECORDS: (state) => state.records,
 		CURRENT_RECORD: (state) => state.currentRecord,
 		DUMMIES: (state) => state.dummies,
+		ENABLE_CAMERA: (state) => state.cameraEnabled,
 	},
 	mutations: {
 		SET_RECORDS(state, payload) {
@@ -46,6 +49,12 @@ export default {
 		},
 		SET_DUMMIES(state, payload) {
 			state.dummies = payload;
+		},
+		ENABLE_CAMERA(state) {
+			state.cameraEnabled = true;
+		},
+		DISABLE_CAMERA(state) {
+			state.cameraEnabled = false;
 		},
 	},
 	actions: {
@@ -131,21 +140,44 @@ export default {
 			}
 		},
 		//The following actions below are created for findings generateion
-		async generateGuestRecord({ rootGetters, commit, dispatch }) {
+		async generateRecord({ rootGetters, state, commit, dispatch }) {
 			try {
 				const user = rootGetters["auth/USER"];
 				const isUserLoggedIn = rootGetters["auth/IS_USER_LOGGED_IN"];
-				const downloadURL = await dispatch("plugins/upload_image", null, {
+				const downloadURL = await dispatch("plugins/upload_image", {
 					root: true,
 				});
+
+				const randomIndex = generateInt(0, 3);
+				const { ratings, findings, interpretation } = state.dummies[
+					randomIndex
+				];
+
 				const newFindings = {
+					title: days().format("ll"),
+					date: days().format("x"),
 					userId: isUserLoggedIn ? user.id : null,
 					downloadURL,
+					ratings,
+					findings,
+					interpretation,
 				};
 
+				let id;
 				if (isUserLoggedIn) {
-					await DB.collection("findings").add(newFindings);
+					const newDoc = await DB.collection("findings").add(newFindings);
+					id = newDoc.id;
+				} else {
+					const newDoc = await DB.collection("tempFindings").add(newFindings);
+					id = newDoc.id;
+					await dispatch(
+						"plugins/set_to_storage",
+						{ key: "trial", value: id },
+						{ root: true }
+					);
 				}
+				newFindings.id = id;
+				commit("ADD_RECORD", newFindings);
 			} catch (err) {
 				throw err;
 			}
