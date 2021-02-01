@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import { cloneDeep } from "lodash";
 import { DB } from "@/config/firebase";
 
@@ -129,6 +130,25 @@ export default {
 				await DB.collection("dummy").add(dummy);
 			}
 		},
-		async generate() {},
+		//The following actions below are created for findings generateion
+		async generateGuestRecord({ rootGetters, commit, dispatch }) {
+			try {
+				const user = rootGetters["auth/USER"];
+				const isUserLoggedIn = rootGetters["auth/IS_USER_LOGGED_IN"];
+				const downloadURL = await dispatch("plugins/upload_image", null, {
+					root: true,
+				});
+				const newFindings = {
+					userId: isUserLoggedIn ? user.id : null,
+					downloadURL,
+				};
+
+				if (isUserLoggedIn) {
+					await DB.collection("findings").add(newFindings);
+				}
+			} catch (err) {
+				throw err;
+			}
+		},
 	},
 };

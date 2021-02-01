@@ -2,7 +2,7 @@
 import { Plugins, CameraResultType } from "@capacitor/core";
 import { STORAGE } from "../../config/firebase";
 import { nanoid } from "nanoid";
-const { Camera } = Plugins;
+const { Camera, Storage } = Plugins;
 
 const bucket = STORAGE.ref("grapherson").child("records");
 
@@ -56,6 +56,19 @@ export default {
 			const fileReference = STORAGE.refFromURL(downloadURL);
 			await fileReference.delete();
 			return true;
+		},
+		async store_to_storage({}, details) {
+			const { key, value } = details;
+			const parsedValue = JSON.stringify(value);
+			await Storage.set({
+				key,
+				value: parsedValue,
+			});
+			return true;
+		},
+		async get_in_storage({}, details) {
+			const contents = await Storage.get({ key: details });
+			return JSON.parse(contents.value);
 		},
 	},
 };
