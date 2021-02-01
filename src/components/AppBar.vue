@@ -7,7 +7,7 @@
 			pageName || ""
 		}}</v-toolbar-title>
 		<v-spacer></v-spacer>
-		<v-btn icon medium @click="goHome">
+		<v-btn icon medium v-if="pageName !== 'Register' && pageName !== 'Proceed as Guest'" @click="goHome">
 			<v-icon>home</v-icon>
 		</v-btn>
 	</v-app-bar>
