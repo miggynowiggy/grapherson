@@ -68,6 +68,7 @@
 							dark
 							large
 							@click="proceed"
+							:loading="proceedBtn"
 						>
 							<span class="font-weight-black">proceed</span>
 							<v-icon right size="21">arrow_forward</v-icon>
@@ -92,6 +93,7 @@
 			name: null,
 			age: null,
 			gender: null,
+			proceedBtn: false,
 		}),
 		methods: {
 			async proceed() {
@@ -99,11 +101,14 @@
 				if (!isFormValid) {
 					return;
 				}
+				this.proceedBtn = true;
 				await this.$store.dispatch("auth/registerGuest", {
 					name: this.name,
 					age: this.age,
 					gender: this.gender,
+					avatar: "plain.png",
 				});
+				this.proceedBtn = true;
 				this.$router.push({ name: "Home" });
 				await Toast.show({
 					text: `Welcome to Grapherson, ${this.name.split(" ")[0]}!`,
