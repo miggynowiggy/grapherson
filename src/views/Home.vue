@@ -5,7 +5,18 @@
 				<v-row justify="center">
 					<v-avatar tile size="200">
 						<v-img
-							:src="userDetails.avatar.includes('https') ? userDetails.avatar : require(`@/assets/avatars/${userDetails.avatar}`)"
+							v-if="userDetails.hasOwnProperty('avatar') && userDetails.avatar"
+							:src="
+								userDetails.avatar.includes('https')
+									? userDetails.avatar
+									: require(`@/assets/avatars/${userDetails.avatar}`)
+							"
+							contain
+							alt="avatar"
+						/>
+						<v-img
+							v-else
+							:src="require(`@/assets/avatars/plain.png`)"
 							contain
 							alt="avatar"
 						/>
@@ -26,13 +37,13 @@
 		name: "Home",
 		components: { BottomNav },
 		data: () => ({}),
-		computed:{
+		computed: {
 			userDetails() {
 				return this.$store.getters["auth/USER"];
 			},
 			firstName() {
 				return this.userDetails.name ? this.userDetails.name.split(" ")[0] : "";
 			},
-		}
+		},
 	};
 </script>
