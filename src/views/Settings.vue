@@ -52,7 +52,7 @@
 				<v-row align="start" justify="center" wrap>
 					<v-col cols="12" align="center">
 						<v-img
-							:src="require(`@/assets/avatars/${userDetails.avatar}`)"
+							:src="require(`@/assets/avatars/plain.png`)"
 							width="150"
 							contain
 						/>
