@@ -15,18 +15,35 @@
 </template>
 
 <script>
+	import { Plugins } from "@capacitor/core";
+	const { Toast } = Plugins;
 	export default {
 		name: "BottomNav",
 		props: ["activeTab"],
 		methods: {
 			goToRecord() {
-				this.$router.push({ name: "Records" });
+				if (this.activeTab.toLowerCase() !== "records")
+					this.$router.push({ name: "Records" });
 			},
-			goToHome() {
-				this.$router.push({ name: "Analyze" });
+			async goToHome() {
+				if (this.activeTab.toLowerCase() === "home") return;
+
+				const isCameraEnabled = this.$store.getters[
+					"plugins/IS_CAMERA_ENABLED"
+				];
+				if (isCameraEnabled) {
+					this.$router.push({ name: "Analyze" });
+				} else {
+					await Toast.show({
+						text: "Please register or login to use the camera",
+						position: "top",
+						duration: "long",
+					});
+				}
 			},
 			goToSettings() {
-				this.$router.push({ name: "Settings" });
+				if (this.activeTab.toLowerCase() !== "settings")
+					this.$router.push({ name: "Settings" });
 			},
 		},
 		computed: {
