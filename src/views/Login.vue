@@ -77,6 +77,7 @@
 							<v-btn
 								class="text-decoration-underline font-weight-black"
 								color="primary"
+								rounded
 								large
 								plain
 								block
