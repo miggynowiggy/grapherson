@@ -5,14 +5,14 @@
 				<v-row justify="center">
 					<v-avatar tile size="200">
 						<v-img
-							:src="require('@/assets/avatars/moustache.png')"
+							:src="require(`@/assets/avatars/${userDetails.avatar}`)"
 							contain
 							alt="avatar"
 						/>
 					</v-avatar>
 				</v-row>
 				<v-row justify="center">
-					<h1 class="secondary--text">Ben</h1>
+					<h1 class="secondary--text">{{ firstName }}</h1>
 				</v-row>
 			</v-container>
 		</v-main>
@@ -26,5 +26,13 @@
 		name: "Home",
 		components: { BottomNav },
 		data: () => ({}),
+		computed:{
+			userDetails() {
+				return this.$store.getters["auth/USER"];
+			},
+			firstName() {
+				return this.userDetails.name ? this.userDetails.name.split(" ")[0] : "";
+			},
+		}
 	};
 </script>

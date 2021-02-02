@@ -4,6 +4,30 @@
 		<v-main>
 			<v-form ref="form" lazy-validation>
 				<v-container fluid class="px-8">
+					<v-row justify="center">
+						<v-avatar tile size="100">
+							<v-img
+								:src="require(`@/assets/avatars/${user.avatar}`)"
+								contain
+								alt="avatar"
+							/>
+						</v-avatar>
+					</v-row>
+					<v-row justify="center" class="mt-3" v-if="toggleEdit">
+						<v-col cols="3" v-for="avatar in avatars" :key="avatar.name">
+							<v-btn fab size="50" @click="changeAvatar(avatar.name)">
+								<v-avatar>
+									<v-img
+										:src="require(`@/assets/avatars/${avatar.name}`)"
+										contain
+										alt="avatar"
+										v-if="avatar.name !== 'add'"
+									/>
+									<v-icon v-else>add</v-icon>
+								</v-avatar>
+							</v-btn>
+						</v-col>
+					</v-row>
 					<v-row align="center" justify="start" wrap class="mt-2">
 						<v-col cols="12">
 							<v-text-field
@@ -158,6 +182,7 @@
 				name: null,
 				age: null,
 				gender: null,
+				avatar: null,
 				email: null,
 			},
 			genders: [
@@ -169,17 +194,28 @@
 				name: null,
 				age: null,
 				gender: null,
+				avatar: null,
 			},
 			saveBtn: false,
 			deleteBtn: false,
+			avatars:[
+				{ name: "plain.png" },
+				{ name: "female.png" },
+				{ name: "male.png" },
+				{ name: "glasses.png" },
+				{ name: "moustache.png" },
+				{ name: "halloween.png" },
+				{ name: "santa.png" },
+				{ name: "add" },
+			],
 		}),
 		async mounted() {
-			// const { name, age, email, gender } = this.$store.getters["auth/USER"];
-			const { name, age, gender, email } = this.$store.getters["auth/USER"];
+			const { name, age, gender, email, avatar } = this.$store.getters["auth/USER"];
 			this.user = {
 				name,
 				age,
 				gender,
+				avatar,
 				email,
 			};
 		},
@@ -187,6 +223,10 @@
 			edit() {
 				this.toggleEdit = true;
 				this.oldState = Object.assign({}, this.user);
+			},
+			changeAvatar(selectedAvatar){
+				if(selectedAvatar !== 'add')
+					this.user.avatar = selectedAvatar;
 			},
 			async save() {
 				let password;
