@@ -75,8 +75,7 @@ export default {
 			const userDoc = await DB.collection("users")
 				.doc(id)
 				.get();
-			const { name, age, gender } = userDoc.data();
-			commit("SET_USER", { name, age, gender, email, id });
+			commit("SET_USER", { ...userDoc.data(), id });
 		},
 		async registerGuest({ commit, rootGetters }, details) {
 			const deviceId = rootGetters["plugins/DEVICE_ID"];
@@ -104,17 +103,8 @@ export default {
 					.doc(id)
 					.set({ name, email, age, gender, avatar });
 				commit("SET_USER", { name, email, age, gender, avatar, id });
-				const isGuestExisting = await dispatch("checkIfGuestExists");
-				if (isGuestExisting) {
-					await dispatch("deleteGuestDetails");
-					const res = await dispatch("records/move_to_findings", null, {
-						root: true,
-					});
-					console.log(res);
-				}
 
 				dispatch("plugins/ENABLE_CAMERA", null, { root: true });
-				commit("SET_USER", { name, email, age, gender, id });
 			} catch (err) {
 				throw err;
 			}

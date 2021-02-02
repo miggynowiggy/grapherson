@@ -67,8 +67,8 @@ export default {
 				.orderBy("date", "desc")
 				.get();
 			const findings = findingsRef.docs.map((finding) => {
-				const data = finding.doc.data();
-				data.id = finding.doc.id;
+				const data = finding.data();
+				data.id = finding.id;
 				return data;
 			});
 			commit("SET_RECORDS", findings);
@@ -202,23 +202,20 @@ export default {
 				throw err;
 			}
 		},
-		async move_to_findings({ state }) {
+		async move_to_findings({ rootGetters }) {
 			const userId = AUTH.currentUser.uid;
-			if (!state.records.length) {
-				return false;
-			}
-			const recordToMove = cloneDeep(state.records[0]);
+			const deviceId = rootGetters["plugins/DEVICE_ID"];
+			const recordToMoveRef = await DB.collection("tempFindings")
+				.doc(deviceId)
+				.get();
+			const recordToMove = recordToMoveRef.data();
 			recordToMove.userId = userId;
+
 			await DB.collection("tempFindings")
-				.doc(recordToMove.id)
+				.doc(deviceId)
 				.delete();
 
-			delete recordToMove.id;
-
-			const newDoc = await DB.collection("findings").add(recordToMove);
-			const { id } = newDoc;
-			state.records[0].id = id;
-
+			await DB.collection("findings").add(recordToMove);
 			return true;
 		},
 	},
