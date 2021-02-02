@@ -80,7 +80,7 @@ export default {
 				.get();
 
 			if (trialRef.exists) {
-				console.log(trialRef.data());
+				console.log(trialRef.data(), trialRef.id);
 				commit("ADD_RECORD", { ...trialRef.data(), id: trialRef.id });
 				dispatch("plugins/DISABLE_CAMERA", null, { root: true });
 			} else {
