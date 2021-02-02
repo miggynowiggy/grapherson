@@ -104,8 +104,8 @@ export default {
 				const id = user.uid;
 				await DB.collection("users")
 					.doc(id)
-					.set({ name, email, age, gender });
-				commit("SET_USER", { name, email, age, gender, id });
+					.set({ name, email, age, gender, avatar });
+				commit("SET_USER", { name, email, age, gender, avatar, id });
 				const isGuestExisting = await dispatch("checkIfGuestExists");
 				if (isGuestExisting) {
 					await dispatch("deleteGuestDetails");
