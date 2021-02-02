@@ -1,27 +1,49 @@
 <template>
 	<v-app>
 		<v-main>
-			<v-container fluid class="main">
-				<v-row justify="center" align="center" class="mt-4">
-					<v-avatar size="150" class="elevation-3">
+			<v-container fluid>
+				<v-row justify="start" class="my-5 mx-2">
+					<v-avatar tile size="100">
 						<v-img
-							v-if="userDetails.hasOwnProperty('avatar') && userDetails.avatar"
-							:src="
-								userDetails.avatar.includes('https')
-									? userDetails.avatar
-									: require(`@/assets/avatars/${userDetails.avatar}`)
-							"
-							alt="avatar"
-						/>
-						<v-img
-							v-else
-							:src="require(`@/assets/avatars/plain.png`)"
+							:src="require(`@/assets/avatars/mascot.png`)"
+							contain
 							alt="avatar"
 						/>
 					</v-avatar>
+					<h2 class="mt-10 primary--text">raphology</h2>
 				</v-row>
-				<v-row justify="center" class="mt-4">
-					<h1 class="secondary--text">{{ firstName }}</h1>
+				<v-row justify="center" class="my-5 mx-2">
+					<v-card class="pa-3">
+						<v-card-title>What is Graphology?</v-card-title>
+						<v-card-text>
+							<span class="primary--text body-1 font-weight-medium"
+								>Graphology</span
+							>
+							<span>
+								is the study of handwriting, especially when employed as a means
+								of analyzing a writer's <b>character</b>, <b>personality</b>,
+								<b>abilities</b>, etc.
+							</span>
+						</v-card-text>
+						<v-card-text>
+							<span class="primary--text body-1 font-weight-medium"
+								>The way you write</span
+							>
+							<span>
+								can indicate more than <b>5,000</b> different personality
+								traits.
+							</span>
+						</v-card-text>
+						<v-card-text>
+							<span class="primary--text body-1 font-weight-medium"
+								>In the medical field,</span
+							>
+							<span>
+								it can be used to refer to the study of handwriting as an
+								<b>aid</b> in diagnosis and <b>tracking</b> of diseases.
+							</span>
+						</v-card-text>
+					</v-card>
 				</v-row>
 			</v-container>
 		</v-main>
