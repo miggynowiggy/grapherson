@@ -247,16 +247,14 @@
 							cancelButtonTitle: "Cancel",
 						});
 						password = response.value;
-					}
-
-					if (!password) {
-						this.saveBtn = false;
-						return;
+						if (!password) {
+							this.saveBtn = false;
+							return;
+						}
 					}
 
 					await this.$store.dispatch("auth/editDetails", this.user, password);
 					this.saveBtn = false;
-					this.$refs.notif.showSuccess("Details Updated!");
 					this.toggleEdit = false;
 					await Toast.show({
 						text: "Your accounts details have been changed!",
