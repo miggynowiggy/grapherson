@@ -224,6 +224,7 @@
 						age: this.age,
 						gender: this.gender,
 						email: this.email,
+						avatar: "plain.png",
 						password: this.password,
 					});
 					this.buttonDisabled = false;
