@@ -11,7 +11,6 @@ export default {
 			id: null,
 			gender: null,
 			email: null,
-			avatar: null,
 		},
 		googleProvider: null,
 	},
@@ -35,7 +34,6 @@ export default {
 				age: null,
 				gender: null,
 				email: null,
-				avatar: null,
 			};
 		},
 		SET_GOOGLE_PROVIDER(state, payload) {
@@ -77,8 +75,8 @@ export default {
 			const userDoc = await DB.collection("users")
 				.doc(id)
 				.get();
-			const { name, age, gender, avatar } = userDoc.data();
-			commit("SET_USER", { name, age, gender, avatar, email, id });
+			const { name, age, gender } = userDoc.data();
+			commit("SET_USER", { name, age, gender, email, id });
 		},
 		async registerGuest({ commit, rootGetters }, details) {
 			const deviceId = rootGetters["plugins/DEVICE_ID"];
@@ -96,7 +94,7 @@ export default {
 		},
 		async registerManually({ commit, dispatch }, userDetails) {
 			try {
-				const { name, age, gender, avatar, email, password } = userDetails;
+				const { name, age, gender, email, password } = userDetails;
 				const { user } = await AUTH.createUserWithEmailAndPassword(
 					email,
 					password
@@ -109,9 +107,14 @@ export default {
 				const isGuestExisting = await dispatch("checkIfGuestExists");
 				if (isGuestExisting) {
 					await dispatch("deleteGuestDetails");
-					await dispatch("records/move_to_findings", null, { root: true });
+					const res = await dispatch("records/move_to_findings", null, {
+						root: true,
+					});
+					console.log(res);
 				}
+
 				dispatch("plugins/ENABLE_CAMERA", null, { root: true });
+				commit("SET_USER", { name, email, age, gender, id });
 			} catch (err) {
 				throw err;
 			}
@@ -126,7 +129,6 @@ export default {
 					email: user.email,
 					age: 0,
 					gender: null,
-					avatar: "plain.png",
 					id: user.uid,
 				};
 				await DB.collection("users")

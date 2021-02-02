@@ -27,10 +27,13 @@
 	export default {
 		name: "Process",
 		async mounted() {
-			await this.$store.dispatch("plugins/upload_image");
-			setInterval(() => {
-				this.showNextMessage();
-			}, 6000);
+			this.setNextTimer();
+			setTimeout(() => {
+				this.$store.dispatch("records/generateRecord");
+			}, 2000);
+		},
+		beforeDestroy() {
+			clearInterval(this.setNextTimer);
 		},
 		data: () => ({
 			displayMessages: [
@@ -49,16 +52,16 @@
 			},
 		}),
 		methods: {
-			showNextMessage() {
-				if (this.progress < this.displayMessages.length) {
-					this.progress += 1;
-				}
+			setNextTimer() {
+				setInterval(() => {
+					this.showNextMessage();
+				}, 6000);
 			},
-		},
-		watch: {
-			progress(val) {
-				if (val > this.displayMessages.length) {
-					clearInterval(this.showNextMessage);
+			showNextMessage() {
+				if (this.progress !== this.displayMessages.length - 1) {
+					this.progress += 1;
+				} else {
+					this.$router.push({ name: "ViewRecord" });
 				}
 			},
 		},
