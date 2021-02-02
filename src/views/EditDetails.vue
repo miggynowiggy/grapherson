@@ -28,6 +28,7 @@
 							</v-btn>
 						</v-col>
 					</v-row>
+					<v-divider class="my-5" v-if="toggleEdit" />
 					<v-row align="center" justify="start" wrap class="mt-2">
 						<v-col cols="12">
 							<v-text-field
