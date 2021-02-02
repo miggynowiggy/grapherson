@@ -1,10 +1,11 @@
 /* eslint-disable no-empty-pattern */
 import { Plugins, CameraResultType } from "@capacitor/core";
-import { STORAGE } from "../../config/firebase";
+import { STORAGE, AUTH } from "../../config/firebase";
 import { nanoid } from "nanoid";
 const { Camera, Storage } = Plugins;
 
 const bucket = STORAGE.ref("handwritings");
+const avatarBucket = STORAGE.ref("avatars");
 
 export default {
 	namespaced: true,
@@ -25,6 +26,9 @@ export default {
 		SET_DEVICE_UUID(state, payload) {
 			state.deviceId = payload;
 		},
+		CLEAR_CAPTURED_PHOTO(state) {
+			state.capturePhoto = null;
+		}
 	},
 	actions: {
 		ENABLE_CAMERA({ state }) {
@@ -59,6 +63,15 @@ export default {
 				.child(`${fileId}.jpg`)
 				.putString(state.capturePhoto, "data_url");
 			const downloadUrl = await bucket.child(`${fileId}.jpg`).getDownloadURL();
+			return downloadUrl;
+		},
+		async upload_avatar({ state, commit }) {
+			const uid = AUTH.currentUser.uid;
+			await avatarBucket
+				.child(`${uid}.jpg`)
+				.putString(state.capturePhoto, "data_url");
+			const downloadUrl = await avatarBucket.child(`${uid}.jpg`).getDownloadURL();
+			commit("CLEAR_CAPTURED_PHOTO", null);
 			return downloadUrl;
 		},
 		async delete_image({}, downloadURL) {

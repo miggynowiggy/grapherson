@@ -6,7 +6,7 @@
 				<v-row align="start" justify="center" wrap>
 					<v-col cols="12" align="center">
 						<v-img
-							:src="require(`@/assets/avatars/${userDetails.avatar}`)"
+							:src="userDetails.avatar.includes('https') ? userDetails.avatar : require(`@/assets/avatars/${userDetails.avatar}`)"
 							width="150"
 							contain
 						/>
