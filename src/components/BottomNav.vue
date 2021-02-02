@@ -26,8 +26,6 @@
 					this.$router.push({ name: "Records" });
 			},
 			async goToHome() {
-				if (this.activeTab.toLowerCase() === "home") return;
-
 				const isCameraEnabled = this.$store.getters[
 					"plugins/IS_CAMERA_ENABLED"
 				];
