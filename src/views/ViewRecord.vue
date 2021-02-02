@@ -16,10 +16,10 @@
 						<Handwriting :downloadURL="record.downloadURL" />
 					</v-carousel-item>
 					<v-carousel-item>
-						<Graph />
+						<Graph :record="record" />
 					</v-carousel-item>
 					<v-carousel-item>
-						<Result />
+						<Result :record="record" />
 					</v-carousel-item>
 				</v-carousel>
 				<v-row
