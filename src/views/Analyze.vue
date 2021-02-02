@@ -71,6 +71,7 @@
 					</v-col>
 				</v-row>
 			</v-container>
+			<ImageSelector @imageTaken="proceedToProcess" ref="imgSelector" />
 		</v-main>
 	</v-app>
 </template>
@@ -81,6 +82,7 @@
 	import PenPaper from "@/components/Analyze/PenPaper.vue";
 	import Write from "@/components/Analyze/Write.vue";
 	import TakeAPhoto from "@/components/Analyze/TakeAPhoto.vue";
+	import ImageSelector from "@/components/ImageSelector.vue";
 
 	export default {
 		name: "Analyze",
@@ -90,6 +92,7 @@
 			PenPaper,
 			Write,
 			TakeAPhoto,
+			ImageSelector,
 		},
 		data: () => ({
 			currentFrame: 0,
@@ -108,6 +111,9 @@
 				}
 			},
 			openImageSelector() {
+				this.$refs.imgSelector.show();
+			},
+			proceedToProcess() {
 				this.$router.push({ name: "Process" });
 			},
 		},
