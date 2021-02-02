@@ -16,7 +16,7 @@ export default {
 	},
 	getters: {
 		USER: (state) => state.user,
-		IS_USER_SIGNED_IN: () => Boolean(AUTH.currentUser.uid),
+		IS_USER_SIGNED_IN: (state) => !!state.user.id,
 	},
 	mutations: {
 		SET_USER_ID(state, payload) {
@@ -52,6 +52,22 @@ export default {
 				.get();
 			commit("SET_USER", { ...userDoc.data(), id });
 		},
+		async getGuestDetails({ rootGetters, commit }) {
+			const deviceId = rootGetters["plugins/DEVICE_ID"];
+			if (!deviceId) {
+				return false;
+			}
+			const guestDoc = await DB.collection("guests")
+				.doc(deviceId)
+				.get();
+
+			if (guestDoc.exists) {
+				commit("SET_USER", { ...guestDoc.data(), id: null });
+				return true;
+			}
+
+			return false;
+		},
 		async login({ commit }, authCredentials) {
 			const { email, password } = authCredentials;
 			const { user } = await AUTH.signInWithEmailAndPassword(email, password);
@@ -62,7 +78,21 @@ export default {
 			const { name, age, gender } = userDoc.data();
 			commit("SET_USER", { name, age, gender, email, id });
 		},
-		async registerManually({ commit }, userDetails) {
+		async registerGuest({ commit, rootGetters }, details) {
+			const deviceId = rootGetters["plugins/DEVICE_ID"];
+			await DB.collection("guests")
+				.doc(deviceId)
+				.set(details);
+			commit("SET_USER", details);
+		},
+		async checkIfGuestExists({ rootGetters }) {
+			const deviceId = rootGetters["plugins/DEVICE_ID"];
+			const guestDoc = await DB.collection("guests")
+				.doc(deviceId)
+				.get();
+			return guestDoc.exists;
+		},
+		async registerManually({ commit, dispatch }, userDetails) {
 			try {
 				const { name, age, gender, email, password } = userDetails;
 				const { user } = await AUTH.createUserWithEmailAndPassword(
@@ -74,6 +104,12 @@ export default {
 					.doc(id)
 					.set({ name, email, age, gender });
 				commit("SET_USER", { name, email, age, gender, id });
+				const isGuestExisting = await dispatch("checkIfGuestExists");
+				if (isGuestExisting) {
+					await dispatch("deleteGuestDetails");
+					await dispatch("records/move_to_findings", null, { root: true });
+				}
+				dispatch("plugins/ENABLE_CAMERA", null, { root: true });
 			} catch (err) {
 				throw err;
 			}
@@ -102,8 +138,9 @@ export default {
 			await AUTH.signOut();
 			commit("CLEAR_USER");
 		},
-		async editDetails({ state, commit }, newDetails) {
+		async editDetails({ state, commit }, newDetails, password) {
 			if (newDetails?.email && state.user.email !== newDetails.email) {
+				await AUTH.signInWithEmailAndPassword(state.user.email, password);
 				await AUTH.currentUser.updateEmail(newDetails.email);
 			}
 			await DB.collection("users")
@@ -111,23 +148,27 @@ export default {
 				.update(newDetails);
 			commit("SET_USER", newDetails);
 		},
-		async deleteAccount() {
-			console.log("waw delete");
+		async updateGuestDetails({ rootGetters }, detail) {
+			const deviceId = rootGetters["plugins/DEVICE_ID"];
+			await DB.collection("guests")
+				.doc(deviceId)
+				.update(detail);
 		},
-		async store_guest({ state, dispatch }) {
-			await dispatch(
-				"plugins/set_to_storage",
-				{ key: "guestDetails", value: state.user },
-				{ root: true }
-			);
-			return true;
+		async deleteGuestDetails({ rootGetters }) {
+			const deviceId = rootGetters["plugins/DEVICE_ID"];
+			await DB.collection("guests")
+				.doc(deviceId)
+				.delete();
 		},
-		async get_guest({ dispatch, commit }) {
-			const guest = await dispatch("plugins/get_in_storage", "guestDetails", {
-				root: true,
-			});
-			commit("SET_USER", guest);
-			return guest?.name ? true : false;
+		async deleteAccount({ state, commit }, password) {
+			await AUTH.signInWithEmailAndPassword(state.user.email, password);
+			await DB.collection("users")
+				.doc(state.user.id)
+				.delete();
+			await AUTH.currentUser.delete();
+			commit("CLEAR_USER");
+			await AUTH.signOut();
+			console.log("waw deleted na");
 		},
 	},
 };
