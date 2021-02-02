@@ -35,12 +35,17 @@
 			bottomSheet: false,
 		}),
 		methods: {
+			async show() {
+				this.bottomSheet = true;
+			},
 			async takeImage(mode) {
 				this.bottomSheet = false;
 				if (mode === "camera") {
 					await this.$store.dispatch("plugins/takePicture");
+					this.$emit("imageTaken");
 				} else {
 					await this.$store.dispatch("plugins/getGalleryPhoto");
+					this.$emit("imageTaken");
 				}
 			},
 		},
