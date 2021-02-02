@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<app-bar :pageName="'Previous Findings'" />
+		<AppBar pageTitle="Previous Findings" />
 		<v-main style="overflow: hidden;">
 			<v-container fluid class="main" v-if="results.length">
 				<v-row wrap align="center" justify="center">

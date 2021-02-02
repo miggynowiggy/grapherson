@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<AppBar :pageName="'Register'" />
+		<AppBar pageTitle="Register" />
 		<v-main>
 			<v-container fluid>
 				<v-row align="center" justify="center" wrap>

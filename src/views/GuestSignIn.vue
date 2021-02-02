@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<AppBar :pageName="'Proceed as Guest'" />
+		<AppBar pageTitle="Proceed as Guest" />
 		<v-main>
 			<v-container fluid px-10>
 				<v-form lazy-validation ref="form">

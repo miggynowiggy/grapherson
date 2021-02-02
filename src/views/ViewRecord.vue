@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<app-bar :pageName="record.title" />
+		<AppBar :pageTitle="record.title" />
 		<v-main>
 			<v-container fluid>
 				<v-carousel

@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<app-bar :pageName="'Change Password'" />
+		<AppBar pageTitle="Change Password" />
 		<v-main>
 			<v-container>
 				<h1 class="primary--text">Change Password</h1>

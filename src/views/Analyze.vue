@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<app-bar :pageName="''" />
+		<AppBar pageTitle="" />
 		<v-main>
 			<v-container fluid fill-height v-show="loading">
 				<v-row align="start" justify="center">
