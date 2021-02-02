@@ -11,18 +11,15 @@
 				</v-avatar>
 			</v-col>
 			<v-col cols="10" class="mt-n3">
-				<h1 class="headline primary--text mt-6">
-					YOU'RE AN ABSOLUTE INTROVERT!
+				<h1 class="headline primary--text text-uppercase mt-6">
+					{{ record.findings }}
 				</h1>
 			</v-col>
 			<v-col cols="11" class="mt-n6">
 				<v-card rounded elevation="5" color="secondary darken-2" class="my-6">
 					<v-card-text>
 						<p class="text-subtitle-1 white--text">
-							You are a very persistent person and heavily driven on doing your
-							passion. However, it seems that you dont enjoy much of being
-							around people most of the time. Which is a good thing because it
-							gives you time to think about existence and life.
+							{{ record.interpretation }}
 						</p>
 					</v-card-text>
 				</v-card>
@@ -32,5 +29,23 @@
 </template>
 
 <script>
-	export default {};
+	export default {
+		name: "Result",
+		props: ["record"],
+		mounted() {
+			const { findings } = this.record;
+			if (findings === "Introvert" || findings === "Extrovert") {
+				this.findings = `You're an ${findings}`;
+			} else if (
+				findings === "Depression tendencies" ||
+				findings === "Anxiety tendencies"
+			) {
+				this.findings = `You're having ${findings}`;
+			}
+		},
+		data: () => ({
+			findings: "",
+			interpretation: "",
+		}),
+	};
 </script>
