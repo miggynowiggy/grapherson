@@ -1,15 +1,19 @@
 <template>
 	<v-app>
-		<app-bar :pageName="'Edit Details'" />
+		<AppBar pageTitle="Edit Details" />
 		<v-main>
 			<v-form ref="form" lazy-validation>
 				<v-container fluid class="px-8">
 					<v-row justify="center">
-						<v-avatar tile size="100">
+						<v-avatar size="150">
 							<v-img
-								:src="user.avatar.includes('https') ? user.avatar : require(`@/assets/avatars/${user.avatar}`)"
-								contain
+								:src="
+									user.avatar.includes('https')
+										? user.avatar
+										: require(`@/assets/avatars/${user.avatar}`)
+								"
 								alt="avatar"
+								:contain="!user.avatar.includes('https')"
 							/>
 						</v-avatar>
 					</v-row>
@@ -29,7 +33,7 @@
 						</v-col>
 					</v-row>
 					<v-divider class="my-5" v-if="toggleEdit" />
-					<v-row align="center" justify="start" wrap class="mt-2">
+					<v-row align="center" justify="start" wrap class="mt-5">
 						<v-col cols="12">
 							<v-text-field
 								v-model="user.name"
@@ -177,7 +181,7 @@
 		name: "EditDetails",
 		components: {
 			AppBar,
-			ImageSelector
+			ImageSelector,
 		},
 		data: () => ({
 			isFormValid: false,
@@ -203,7 +207,7 @@
 			saveBtn: false,
 			deleteBtn: false,
 			addNewAvatar: false,
-			avatars:[
+			avatars: [
 				{ name: "plain.png" },
 				{ name: "female.png" },
 				{ name: "male.png" },
@@ -214,8 +218,10 @@
 				{ name: "add" },
 			],
 		}),
-		async mounted() {
-			const { name, age, gender, email, avatar } = this.$store.getters["auth/USER"];
+		async created() {
+			const { name, age, gender, email, avatar } = this.$store.getters[
+				"auth/USER"
+			];
 			this.user = {
 				name,
 				age,
@@ -229,15 +235,17 @@
 				this.toggleEdit = true;
 				this.oldState = Object.assign({}, this.user);
 			},
-			changeAvatar(selectedAvatar){
-				if(selectedAvatar !== 'add')
-					this.user.avatar = selectedAvatar;
-				else{
+			changeAvatar(selectedAvatar) {
+				if (selectedAvatar !== "add") this.user.avatar = selectedAvatar;
+				else {
 					this.$refs.imgSelector.show();
 				}
 			},
 			async uploadAvatar() {
-				this.user.avatar = await this.$store.dispatch("plugins/upload_avatar", null);
+				this.user.avatar = await this.$store.dispatch(
+					"plugins/upload_avatar",
+					null
+				);
 			},
 			async save() {
 				let password;

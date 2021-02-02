@@ -1,9 +1,9 @@
 <template>
 	<v-app>
 		<v-main>
-			<v-container fluid>
-				<v-row justify="center">
-					<v-avatar tile size="200">
+			<v-container fluid class="main">
+				<v-row justify="center" align="center" class="mt-4">
+					<v-avatar size="150" class="elevation-3">
 						<v-img
 							v-if="userDetails.hasOwnProperty('avatar') && userDetails.avatar"
 							:src="
@@ -11,18 +11,16 @@
 									? userDetails.avatar
 									: require(`@/assets/avatars/${userDetails.avatar}`)
 							"
-							contain
 							alt="avatar"
 						/>
 						<v-img
 							v-else
 							:src="require(`@/assets/avatars/plain.png`)"
-							contain
 							alt="avatar"
 						/>
 					</v-avatar>
 				</v-row>
-				<v-row justify="center">
+				<v-row justify="center" class="mt-4">
 					<h1 class="secondary--text">{{ firstName }}</h1>
 				</v-row>
 			</v-container>

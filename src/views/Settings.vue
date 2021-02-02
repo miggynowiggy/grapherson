@@ -1,15 +1,20 @@
 <template>
 	<v-app>
-		<app-bar :pageName="'Settings'" />
+		<AppBar pageTitle="Settings" />
 		<v-main>
 			<v-container fluid v-if="isUserLoggedIn">
 				<v-row align="start" justify="center" wrap>
 					<v-col cols="12" align="center">
-						<v-img
-							:src="userDetails.avatar.includes('https') ? userDetails.avatar : require(`@/assets/avatars/${userDetails.avatar}`)"
-							width="150"
-							contain
-						/>
+						<v-avatar size="150" class="elevation-3">
+							<v-img
+								wid
+								:src="
+									userDetails.avatar.includes('https')
+										? userDetails.avatar
+										: require(`@/assets/avatars/${userDetails.avatar}`)
+								"
+							/>
+						</v-avatar>
 					</v-col>
 					<v-col cols="12" align="center" class="mt-n1">
 						<span class="text-h5 font-weight-bold secondary--text"
