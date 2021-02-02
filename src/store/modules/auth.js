@@ -94,7 +94,7 @@ export default {
 		},
 		async registerManually({ commit, dispatch }, userDetails) {
 			try {
-				const { name, age, gender, email, password } = userDetails;
+				const { name, age, gender, avatar, email, password } = userDetails;
 				const { user } = await AUTH.createUserWithEmailAndPassword(
 					email,
 					password
