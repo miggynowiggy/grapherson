@@ -1,7 +1,7 @@
 <template>
 	<span class="supermain">
 		<div class="mainBox">
-			<span class="records" @click="goToRecord" :v-ripple="isUserLoggedIn">
+			<span class="records" @click="goToRecord" v-ripple>
 				<v-icon large :color="recordsIconColor">receipt_long</v-icon>
 			</span>
 			<span class="settings" @click="goToSettings" v-ripple>
@@ -20,9 +20,7 @@
 		props: ["activeTab"],
 		methods: {
 			goToRecord() {
-				if (this.isUserLoggedIn) {
-					this.$router.push({ name: "Records" });
-				}
+				this.$router.push({ name: "Records" });
 			},
 			goToHome() {
 				this.$router.push({ name: "Analyze" });
@@ -36,16 +34,9 @@
 				return this.$store.getters["auth/IS_USER_SIGNED_IN"];
 			},
 			recordsIconColor() {
-				if (this.activeTab.toLowerCase() === "records" && this.isUserLoggedIn) {
-					return "primary";
-				} else if (
-					this.activeTab.toLowerCase() !== "records" &&
-					this.isUserLoggedIn
-				) {
-					return "grey darken-1";
-				} else {
-					return "grey lighten-3";
-				}
+				return this.activeTab.toLowerCase() === "records"
+					? "primary"
+					: "grey darken-1";
 			},
 			settingsIconColor() {
 				return this.activeTab.toLowerCase() === "settings"
