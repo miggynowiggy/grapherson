@@ -45,6 +45,36 @@
 						</v-card-text>
 					</v-card>
 				</v-row>
+
+				<v-row>
+					<v-col>
+						<v-sheet
+							class="mx-auto"
+							max-width="500"
+						>
+							<v-slide-group
+								multiple
+								center-active
+							>
+								<v-slide-item
+									v-for="article in articles"
+									:key="article.link"
+								>
+									<v-card width="300" class="ma-2 pa-3" @click="openBrowser(article.link)">
+										<v-card-text>
+											<v-img 
+												:src="require(`@/assets/articles/${article.pic}`)"
+												contain
+												alt="article pic"
+											/>
+										</v-card-text>
+										<v-card-title>{{ article.name }}</v-card-title>
+									</v-card>
+								</v-slide-item>
+							</v-slide-group>
+						</v-sheet>
+					</v-col>
+				</v-row>
 			</v-container>
 		</v-main>
 		<bottom-nav :activeTab="'Home'" />
@@ -53,10 +83,21 @@
 
 <script>
 	import BottomNav from "../components/BottomNav.vue";
+	import { Plugins } from '@capacitor/core';
 	export default {
 		name: "Home",
 		components: { BottomNav },
-		data: () => ({}),
+		data: () => ({
+			articles: [
+				{ pic: "article1.png", name: "What Does Your Handwriting Say About You?", link: "https://www.pens.com/handwriting-infographic" },
+			],
+		}),
+		methods:{
+			async openBrowser(source) {
+				const { Browser } = Plugins;
+				await Browser.open({ url: source, windowName: "_blank", presentationStyle: "popover" });
+			},
+		},
 		computed: {
 			userDetails() {
 				return this.$store.getters["auth/USER"];
@@ -73,5 +114,8 @@
 		max-height: 83vh;
 		overflow-y: scroll;
 		scroll-behavior: smooth;
+	}
+	.cardOverflow{
+		overflow: auto;
 	}
 </style>
