@@ -115,7 +115,4 @@
 		overflow-y: scroll;
 		scroll-behavior: smooth;
 	}
-	.cardOverflow{
-		overflow: auto;
-	}
 </style>
