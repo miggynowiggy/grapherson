@@ -7,7 +7,7 @@
 					<v-row justify="center">
 						<v-avatar tile size="100">
 							<v-img
-								:src="require(`@/assets/avatars/${user.avatar}`)"
+								:src="user.avatar.includes('https') ? user.avatar : require(`@/assets/avatars/${user.avatar}`)"
 								contain
 								alt="avatar"
 							/>
@@ -163,6 +163,7 @@
 					</v-row>
 				</v-container>
 			</v-form>
+			<ImageSelector ref="imgSelector" @imageTaken="uploadAvatar" />
 		</v-main>
 	</v-app>
 </template>
@@ -170,11 +171,13 @@
 <script>
 	import { Plugins } from "@capacitor/core";
 	import AppBar from "@/components/AppBar.vue";
+	import ImageSelector from "@/components/ImageSelector.vue";
 	const { Toast, Modals } = Plugins;
 	export default {
 		name: "EditDetails",
 		components: {
 			AppBar,
+			ImageSelector
 		},
 		data: () => ({
 			isFormValid: false,
@@ -199,6 +202,7 @@
 			},
 			saveBtn: false,
 			deleteBtn: false,
+			addNewAvatar: false,
 			avatars:[
 				{ name: "plain.png" },
 				{ name: "female.png" },
@@ -228,6 +232,12 @@
 			changeAvatar(selectedAvatar){
 				if(selectedAvatar !== 'add')
 					this.user.avatar = selectedAvatar;
+				else{
+					this.$refs.imgSelector.show();
+				}
+			},
+			async uploadAvatar() {
+				this.user.avatar = await this.$store.dispatch("plugins/upload_avatar", null);
 			},
 			async save() {
 				let password;

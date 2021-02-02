@@ -5,7 +5,7 @@
 				<v-row justify="center">
 					<v-avatar tile size="200">
 						<v-img
-							:src="require(`@/assets/avatars/${userDetails.avatar}`)"
+							:src="userDetails.avatar.includes('https') ? userDetails.avatar : require(`@/assets/avatars/${userDetails.avatar}`)"
 							contain
 							alt="avatar"
 						/>
