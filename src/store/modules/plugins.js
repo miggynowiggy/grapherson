@@ -4,17 +4,19 @@ import { STORAGE } from "../../config/firebase";
 import { nanoid } from "nanoid";
 const { Camera, Storage } = Plugins;
 
-const bucket = STORAGE.ref("grapherson").child("records");
+const bucket = STORAGE.ref("handwritings");
 
 export default {
 	namespaced: true,
 	state: {
 		capturePhoto: null,
 		deviceId: null,
+		enableCamera: true,
 	},
 	getters: {
 		CAPTURE_PHOTO: (state) => state.capturePhoto,
 		DEVICE_ID: (state) => state.deviceId,
+		IS_CAMERA_ENABLED: (state) => state.enableCamera,
 	},
 	mutations: {
 		SET_CAPTURED_PHOTO(state, payload) {
@@ -25,6 +27,12 @@ export default {
 		},
 	},
 	actions: {
+		ENABLE_CAMERA({ state }) {
+			state.enableCamera = true;
+		},
+		DISABLE_CAMERA({ state }) {
+			state.enableCamera = false;
+		},
 		async takePicture({ commit }) {
 			const image = await Camera.getPhoto({
 				source: "CAMERA",
@@ -32,7 +40,7 @@ export default {
 				resultType: CameraResultType.DataUrl,
 				format: "jpeg",
 			});
-			commit("SET_CAPTURES_PHOTO", image);
+			commit("SET_CAPTURED_PHOTO", image.dataUrl);
 			return image;
 		},
 		async getGalleryPhoto({ commit }) {
@@ -42,14 +50,15 @@ export default {
 				resultType: CameraResultType.DataUrl,
 				format: "jpeg",
 			});
-			commit("SET_CAPTURED_PHOTO", image);
+			commit("SET_CAPTURED_PHOTO", image.dataUrl);
 			return image;
 		},
 		async upload_image({ state }) {
-			const uploadedFile = await bucket
-				.child(`${nanoid()}.jpg`)
-				.putString(state.currentImage, "data_url");
-			const downloadUrl = await uploadedFile.getDownloadURL();
+			const fileId = nanoid();
+			await bucket
+				.child(`${fileId}.jpg`)
+				.putString(state.capturePhoto, "data_url");
+			const downloadUrl = await bucket.child(`${fileId}.jpg`).getDownloadURL();
 			return downloadUrl;
 		},
 		async delete_image({}, downloadURL) {
@@ -69,6 +78,10 @@ export default {
 		async get_in_storage({}, details) {
 			const contents = await Storage.get({ key: details });
 			return JSON.parse(contents.value);
+		},
+		async remove_in_storage({}, key) {
+			await Storage.remove({ key });
+			return true;
 		},
 	},
 };
