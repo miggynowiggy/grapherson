@@ -1,7 +1,7 @@
 <template>
 	<v-app>
-		<v-main>
-			<v-container fluid>
+		<v-main style="overflow: hidden;">
+			<v-container fluid class="main">
 				<v-row justify="start" class="my-5 mx-2">
 					<v-avatar tile size="100">
 						<v-img
@@ -67,3 +67,11 @@
 		},
 	};
 </script>
+
+<style>
+	.main {
+		max-height: 83vh;
+		overflow-y: scroll;
+		scroll-behavior: smooth;
+	}
+</style>
