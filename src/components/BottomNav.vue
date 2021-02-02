@@ -1,7 +1,7 @@
 <template>
 	<span class="supermain">
 		<div class="mainBox">
-			<span class="records" @click="goToRecord" :v-ripple="isUserLoggedIn">
+			<span class="records" @click="goToRecord" v-ripple>
 				<v-icon large :color="recordsIconColor">receipt_long</v-icon>
 			</span>
 			<span class="settings" @click="goToSettings" v-ripple>
@@ -15,20 +15,35 @@
 </template>
 
 <script>
+	import { Plugins } from "@capacitor/core";
+	const { Toast } = Plugins;
 	export default {
 		name: "BottomNav",
 		props: ["activeTab"],
 		methods: {
 			goToRecord() {
-				if (this.isUserLoggedIn) {
+				if (this.activeTab.toLowerCase() !== "records")
 					this.$router.push({ name: "Records" });
+			},
+			async goToHome() {
+				if (this.activeTab.toLowerCase() === "home") return;
+
+				const isCameraEnabled = this.$store.getters[
+					"plugins/IS_CAMERA_ENABLED"
+				];
+				if (isCameraEnabled) {
+					this.$router.push({ name: "Analyze" });
+				} else {
+					await Toast.show({
+						text: "Please register or login to use the camera",
+						position: "top",
+						duration: "long",
+					});
 				}
 			},
-			goToHome() {
-				this.$router.push({ name: "Analyze" });
-			},
 			goToSettings() {
-				this.$router.push({ name: "Settings" });
+				if (this.activeTab.toLowerCase() !== "settings")
+					this.$router.push({ name: "Settings" });
 			},
 		},
 		computed: {
@@ -36,16 +51,9 @@
 				return this.$store.getters["auth/IS_USER_SIGNED_IN"];
 			},
 			recordsIconColor() {
-				if (this.activeTab.toLowerCase() === "records" && this.isUserLoggedIn) {
-					return "primary";
-				} else if (
-					this.activeTab.toLowerCase() !== "records" &&
-					this.isUserLoggedIn
-				) {
-					return "grey darken-1";
-				} else {
-					return "grey lighten-3";
-				}
+				return this.activeTab.toLowerCase() === "records"
+					? "primary"
+					: "grey darken-1";
 			},
 			settingsIconColor() {
 				return this.activeTab.toLowerCase() === "settings"

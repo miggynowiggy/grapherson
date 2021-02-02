@@ -1,6 +1,7 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-useless-catch */
 import { cloneDeep } from "lodash";
-import { DB } from "@/config/firebase";
+import { AUTH, DB } from "@/config/firebase";
 import days from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 days.extend(advancedFormat);
@@ -26,13 +27,11 @@ export default {
 			interpretation: null,
 			ratings: {},
 		},
-		cameraEnabled: true,
 	},
 	getters: {
 		ALL_RECORDS: (state) => state.records,
 		CURRENT_RECORD: (state) => state.currentRecord,
 		DUMMIES: (state) => state.dummies,
-		ENABLE_CAMERA: (state) => state.cameraEnabled,
 	},
 	mutations: {
 		SET_RECORDS(state, payload) {
@@ -50,22 +49,43 @@ export default {
 		SET_DUMMIES(state, payload) {
 			state.dummies = payload;
 		},
-		ENABLE_CAMERA(state) {
-			state.cameraEnabled = true;
-		},
-		DISABLE_CAMERA(state) {
-			state.cameraEnabled = false;
-		},
 	},
 	actions: {
-		async getAllDummyData({ commit }) {
+		async getAllDummies({ commit }) {
 			const dummiesRef = await DB.collection("dummy").get();
 			const dummies = dummiesRef.docs.map((dummy) => {
-				const data = dummy.doc.data();
-				data.id = dummy.doc.id;
+				const data = dummy.data();
+				data.id = dummy.id;
 				return data;
 			});
 			commit("SET_DUMMIES", dummies);
+		},
+		async getAllFindings({ commit }) {
+			const userId = AUTH.currentUser.uid;
+			const findingsRef = await DB.collection("findings")
+				.where("userId", "==", userId)
+				.orderBy("date", "desc")
+				.get();
+			const findings = findingsRef.docs.map((finding) => {
+				const data = finding.doc.data();
+				data.id = finding.doc.id;
+				return data;
+			});
+			commit("SET_RECORDS", findings);
+		},
+		async getAllGuestTrial({ commit, rootGetters, dispatch }) {
+			const deviceId = rootGetters["plugins/DEVICE_ID"];
+			const trialRef = await DB.collection("tempFindings")
+				.doc(deviceId)
+				.get();
+
+			if (trialRef.exists) {
+				console.log(trialRef.data());
+				commit("ADD_RECORD", { ...trialRef.data(), id: trialRef.id });
+				dispatch("plugins/DISABLE_CAMERA", null, { root: true });
+			} else {
+				dispatch("plugins/ENABLE_CAMERA", null, { root: true });
+			}
 		},
 		async generateRandomData() {
 			const findings = [
@@ -90,44 +110,44 @@ export default {
 			];
 			const ratings = [
 				{
-					emotional_stability: generateNumber(8, 10),
-					will_power: generateNumber(6, 10),
-					modesty: generateNumber(8, 9),
-					harmony_flexibility: generateNumber(1, 4),
-					discipline: generateNumber(6, 10),
-					concentration: generateNumber(2, 4),
-					communicativeness: generateNumber(1, 3),
-					sociability: generateNumber(1, 2),
+					emotional_stability: generateNumber(80, 100),
+					will_power: generateNumber(60, 100),
+					modesty: generateNumber(80, 90),
+					harmony_flexibility: generateNumber(10, 40),
+					discipline: generateNumber(60, 100),
+					concentration: generateNumber(20, 40),
+					communicativeness: generateNumber(10, 30),
+					sociability: generateNumber(10, 20),
 				},
 				{
-					emotional_stability: generateNumber(8, 10),
-					will_power: generateNumber(9, 10),
-					modesty: generateNumber(9, 10),
-					harmony_flexibility: generateNumber(8, 10),
-					discipline: generateNumber(6, 10),
-					concentration: generateNumber(5, 10),
-					communicativeness: generateNumber(8, 10),
-					sociability: generateNumber(9, 10),
+					emotional_stability: generateNumber(80, 100),
+					will_power: generateNumber(90, 100),
+					modesty: generateNumber(90, 100),
+					harmony_flexibility: generateNumber(80, 100),
+					discipline: generateNumber(60, 100),
+					concentration: generateNumber(50, 100),
+					communicativeness: generateNumber(80, 100),
+					sociability: generateNumber(90, 100),
 				},
 				{
-					emotional_stability: generateNumber(0, 1),
-					will_power: generateNumber(0, 1),
-					modesty: generateNumber(9, 10),
-					harmony_flexibility: generateNumber(0, 1),
-					discipline: generateNumber(2, 3),
-					concentration: generateNumber(0, 1),
-					communicativeness: generateNumber(0, 2),
-					sociability: generateNumber(0, 1),
+					emotional_stability: generateNumber(0, 10),
+					will_power: generateNumber(0, 10),
+					modesty: generateNumber(90, 100),
+					harmony_flexibility: generateNumber(0, 10),
+					discipline: generateNumber(20, 30),
+					concentration: generateNumber(0, 10),
+					communicativeness: generateNumber(0, 20),
+					sociability: generateNumber(0, 10),
 				},
 				{
-					emotional_stability: generateNumber(1, 2),
-					will_power: generateNumber(1, 2),
-					modesty: generateNumber(9, 10),
-					harmony_flexibility: generateNumber(2, 4),
-					discipline: generateNumber(1, 3),
-					concentration: generateNumber(0, 1),
-					communicativeness: generateNumber(0, 2),
-					sociability: generateNumber(0, 1),
+					emotional_stability: generateNumber(10, 20),
+					will_power: generateNumber(10, 20),
+					modesty: generateNumber(90, 100),
+					harmony_flexibility: generateNumber(20, 40),
+					discipline: generateNumber(10, 30),
+					concentration: generateNumber(0, 10),
+					communicativeness: generateNumber(0, 20),
+					sociability: generateNumber(0, 10),
 				},
 			];
 			for (let count = 0; count < findings.length; count++) {
@@ -144,7 +164,7 @@ export default {
 			try {
 				const user = rootGetters["auth/USER"];
 				const isUserLoggedIn = rootGetters["auth/IS_USER_LOGGED_IN"];
-				const downloadURL = await dispatch("plugins/upload_image", {
+				const downloadURL = await dispatch("plugins/upload_image", null, {
 					root: true,
 				});
 
@@ -154,7 +174,7 @@ export default {
 				];
 
 				const newFindings = {
-					title: days().format("ll"),
+					title: days().format("MMM DD YYYY"),
 					date: days().format("x"),
 					userId: isUserLoggedIn ? user.id : null,
 					downloadURL,
@@ -168,19 +188,38 @@ export default {
 					const newDoc = await DB.collection("findings").add(newFindings);
 					id = newDoc.id;
 				} else {
-					const newDoc = await DB.collection("tempFindings").add(newFindings);
-					id = newDoc.id;
-					await dispatch(
-						"plugins/set_to_storage",
-						{ key: "trial", value: id },
-						{ root: true }
-					);
+					const deviceId = rootGetters["plugins/DEVICE_ID"];
+					await DB.collection("tempFindings")
+						.doc(deviceId)
+						.set(newFindings);
+					id = deviceId;
+					dispatch("plugins/DISABLE_CAMERA", null, { root: true });
 				}
 				newFindings.id = id;
 				commit("ADD_RECORD", newFindings);
+				commit("SET_CURRENT_RECORD", newFindings);
 			} catch (err) {
 				throw err;
 			}
+		},
+		async move_to_findings({ state }) {
+			const userId = AUTH.currentUser.uid;
+			if (!state.records.length) {
+				return false;
+			}
+			const recordToMove = cloneDeep(state.records[0]);
+			recordToMove.userId = userId;
+			await DB.collection("tempFindings")
+				.doc(recordToMove.id)
+				.delete();
+
+			delete recordToMove.id;
+
+			const newDoc = await DB.collection("findings").add(recordToMove);
+			const { id } = newDoc;
+			state.records[0].id = id;
+
+			return true;
 		},
 	},
 };

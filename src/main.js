@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
@@ -5,7 +6,7 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import { Plugins } from "@capacitor/core";
-const { StatusBar, Device } = Plugins;
+const { StatusBar, Device, SplashScreen } = Plugins;
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import LottiePlayer from "lottie-player-vue";
 import { AUTH } from "./config/firebase";
@@ -13,7 +14,10 @@ import { AUTH } from "./config/firebase";
 Vue.config.productionTip = false;
 Vue.use(LottiePlayer);
 
+SplashScreen.show({ autoHide: false });
+
 Device.getInfo().then((info) => {
+	console.log("device info: ", info);
 	store.commit("plugins/SET_DEVICE_UUID", info.uuid);
 	if (info.platform !== "web") {
 		StatusBar.setOverlaysWebView({ overlay: false });
@@ -26,16 +30,12 @@ window.addEventListener("deviceready", () => {
 });
 
 AUTH.onAuthStateChanged(async (user) => {
+	await store.dispatch("records/getAllDummies");
+
 	if (user) {
 		await store.dispatch("auth/getUserDetails");
-		new Vue({
-			router,
-			store,
-			vuetify,
-			render: (h) => h(App),
-		}).$mount("#app");
-		router.push({ name: "Home" });
-	} else {
+		await store.dispatch("records/getAllFindings");
+
 		new Vue({
 			router,
 			store,
@@ -43,13 +43,26 @@ AUTH.onAuthStateChanged(async (user) => {
 			render: (h) => h(App),
 		}).$mount("#app");
 
-		const isGuestFound = await store.dispatch("auth/get_guest");
-		if (isGuestFound) {
+		router.push({ name: "Home" });
+	} else {
+		const guest = await store.dispatch("auth/getGuestDetails");
+		await store.dispatch("records/getAllGuestTrial");
+
+		new Vue({
+			router,
+			store,
+			vuetify,
+			render: (h) => h(App),
+		}).$mount("#app");
+
+		if (guest) {
 			router.push({ name: "Home" });
 		} else {
 			router.push({ name: "Login" });
 		}
 	}
+
+	SplashScreen.hide();
 });
 
 defineCustomElements(window);

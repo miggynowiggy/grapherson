@@ -43,7 +43,7 @@
 							/>
 						</v-col>
 					</v-row>
-					<!-- <v-row align="center" justify="start" wrap class="mt-n7">
+					<v-row align="center" justify="start" wrap class="mt-n7">
 						<v-col cols="12">
 							<v-text-field
 								v-model="user.email"
@@ -57,7 +57,7 @@
 								:disabled="!toggleEdit"
 							/>
 						</v-col>
-					</v-row> -->
+					</v-row>
 					<v-row align="center" justify="start" wrap class="mt-n7">
 						<v-col cols="12">
 							<v-text-field
@@ -183,6 +183,7 @@
 				age: null,
 				gender: null,
 				avatar: null,
+				email: null,
 			},
 			genders: [
 				{ name: "Male", value: "male" },
@@ -209,13 +210,13 @@
 			],
 		}),
 		async mounted() {
-			// const { name, age, email, gender } = this.$store.getters["auth/USER"];
-			const { name, age, gender, avatar } = this.$store.getters["auth/USER"];
+			const { name, age, gender, email, avatar } = this.$store.getters["auth/USER"];
 			this.user = {
 				name,
 				age,
 				gender,
 				avatar,
+				email,
 			};
 		},
 		methods: {
@@ -228,13 +229,32 @@
 					this.user.avatar = selectedAvatar;
 			},
 			async save() {
+				let password;
 				this.saveBtn = true;
 				try {
 					const isFormValid = this.$refs.form.validate();
 					if (!isFormValid) {
 						return;
 					}
-					await this.$store.dispatch("auth/editDetails", this.user);
+
+					if (this.user.email !== this.oldState.email) {
+						const response = await Modals.prompt({
+							title: "Edit Account Details",
+							message:
+								"You're about to change your email, please enter your account password.",
+							inputPlaceholder: "password",
+							okButtonTitle: "Save Changes",
+							cancelButtonTitle: "Cancel",
+						});
+						password = response.value;
+					}
+
+					if (!password) {
+						this.saveBtn = false;
+						return;
+					}
+
+					await this.$store.dispatch("auth/editDetails", this.user, password);
 					this.saveBtn = false;
 					this.$refs.notif.showSuccess("Details Updated!");
 					this.toggleEdit = false;
@@ -253,16 +273,17 @@
 				this.toggleEdit = false;
 			},
 			async deleteAccount() {
-				const response = await Modals.confirm({
+				const response = await Modals.prompt({
 					title: "Confirm Account Deletion",
 					message:
-						"We're sad to see you go\nAre you sure you want to delete your account?",
+						"We're sad to see you go :(\nPlease re-enter you account password to proceed with the deletion.",
 					okButtonTitle: "Delete",
+					inputPlaceholder: "Account password",
 				});
 
 				if (response.value) {
 					this.deleteBtn = true;
-					await this.$store.dispatch("auth/deleteAccount");
+					await this.$store.dispatch("auth/deleteAccount", response.value);
 					this.deleteBtn = false;
 					await Toast.show({
 						text: "Your account has been deleted :(",

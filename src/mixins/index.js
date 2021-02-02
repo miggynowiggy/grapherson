@@ -1,3 +1,5 @@
+import days from "dayjs";
+
 export default {
 	data: () => ({
 		primaryColor: "#00B882",
@@ -18,4 +20,10 @@ export default {
 			(v) => (v && v.length >= 6) || "Minimum of 6 characters",
 		],
 	}),
+	filters: {
+		formatDate(val) {
+			return days(Number(val)).format("MM/DD/YYYY");
+		},
+	},
+	methods: {},
 };

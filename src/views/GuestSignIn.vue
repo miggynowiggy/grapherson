@@ -99,12 +99,11 @@
 				if (!isFormValid) {
 					return;
 				}
-				this.$store.commit("auth/SET_USER", {
+				await this.$store.dispatch("auth/registerGuest", {
 					name: this.name,
 					age: this.age,
 					gender: this.gender,
 				});
-				await this.$store.dispatch("auth/store_guest");
 				this.$router.push({ name: "Home" });
 				await Toast.show({
 					text: `Welcome to Grapherson, ${this.name.split(" ")[0]}!`,

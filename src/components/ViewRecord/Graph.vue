@@ -11,8 +11,8 @@
 				</v-avatar>
 			</v-col>
 			<v-col cols="10" align="center">
-				<h1 class="headline primary--text mt-3">
-					YOU'RE AN ABSOLUTE INTROVERT!
+				<h1 class="headline primary--text mt-3 text-uppercase">
+					{{ findings }}
 				</h1>
 			</v-col>
 			<v-col cols="11" justify="center" align="center">
@@ -37,14 +37,64 @@
 
 <script>
 	export default {
+		props: ["record"],
+		mounted() {
+			const { ratings, findings } = this.record;
+			if (findings === "Introvert" || findings === "Extrovert") {
+				this.findings = `You're an ${findings}`;
+			} else if (
+				findings === "Depression tendencies" ||
+				findings === "Anxiety tendencies"
+			) {
+				this.findings = `You're having ${findings}`;
+			}
+
+			this.results = [
+				{
+					name: "Emotional Stability",
+					value: Number(ratings.emotional_stability),
+				},
+				{
+					name: "Will Power",
+					value: Number(ratings.will_power),
+				},
+				{
+					name: "Modesty",
+					value: Number(ratings.modesty),
+				},
+				{
+					name: "Harmony Flexibility",
+					value: Number(ratings.harmony_flexibility),
+				},
+				{
+					name: "Discipline",
+					value: Number(ratings.discipline),
+				},
+				{
+					name: "Poor Concentration",
+					value: Number(ratings.concentration),
+				},
+				{
+					name: "Communicativeness",
+					value: Number(ratings.communicativeness),
+				},
+				{
+					name: "Social Ability",
+					value: Number(ratings.sociability),
+				},
+			];
+		},
 		data: () => ({
+			findings: "",
 			results: [
-				{ name: "Aggresiveness", value: 29 },
-				{ name: "Versatile", value: 59 },
-				{ name: "Sensitive", value: 15 },
-				{ name: "Good Will Power", value: 69 },
-				{ name: "Self Confidence", value: 80 },
-				{ name: "Good Thinker", value: 58 },
+				{ name: "Emotional Stability", value: 0 },
+				{ name: "Will Power", value: 0 },
+				{ name: "Modesty", value: 0 },
+				{ name: "Harmony Flexibility", value: 0 },
+				{ name: "Discipline", value: 0 },
+				{ name: "Poor Concentration", value: 0 },
+				{ name: "Communicativeness", value: 0 },
+				{ name: "Social Ability", value: 0 },
 			],
 		}),
 	};
