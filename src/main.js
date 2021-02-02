@@ -31,8 +31,16 @@ window.addEventListener("deviceready", () => {
 
 AUTH.onAuthStateChanged(async (user) => {
 	await store.dispatch("records/getAllDummies");
+	const guest = await store.dispatch("auth/getGuestDetails");
 
 	if (user) {
+		//If the user registered and still has the guest data in DB
+		//Remove the guest and move their trial findings in their actual findings collection
+		if (guest) {
+			await store.dispatch("auth/deleteGuestDetails");
+			await store.dispatch("records/move_to_findings");
+		}
+
 		await store.dispatch("auth/getUserDetails");
 		await store.dispatch("records/getAllFindings");
 
@@ -45,7 +53,6 @@ AUTH.onAuthStateChanged(async (user) => {
 
 		router.push({ name: "Home" });
 	} else {
-		const guest = await store.dispatch("auth/getGuestDetails");
 		await store.dispatch("records/getAllGuestTrial");
 
 		new Vue({
