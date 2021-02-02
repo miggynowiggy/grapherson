@@ -12,7 +12,7 @@
 					</v-avatar>
 				</v-row>
 				<v-row justify="center">
-					<h1 class="secondary--text>{{ firstName }}</h1>
+					<h1 class="secondary--text">{{ firstName }}</h1>
 				</v-row>
 			</v-container>
 		</v-main>
