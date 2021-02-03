@@ -13,10 +13,10 @@
     "generate-icon-splash": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy"
   },
   "dependencies": {
-    "@capacitor/android": "^2.0.0",
-    "@capacitor/cli": "^2.0.0",
-    "@capacitor/core": "^2.0.0",
-    "@capacitor/ios": "^2.0.0",
+    "@capacitor/android": "^2.4.6",
+    "@capacitor/cli": "^2.4.6",
+    "@capacitor/core": "^2.4.6",
+    "@capacitor/ios": "^2.4.6",
     "@ionic/pwa-elements": "^3.0.2",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
