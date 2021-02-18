@@ -5,7 +5,7 @@ import "font-awesome/css/font-awesome.min.css";
 
 const vuetify = new Vuetify({
 	icons: {
-		iconfont: "md" || "fa",
+		iconfont: "md" || "fa" || "mdi",
 	},
 	theme: {
 		themes: {
