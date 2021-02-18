@@ -49,6 +49,7 @@
 				loop: true,
 				mode: "bounce",
 				renderer: "svg",
+				width: "300px",
 			},
 			timeId: null,
 		}),
