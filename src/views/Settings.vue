@@ -7,7 +7,7 @@
 					<v-col cols="12" align="center">
 						<v-avatar size="150" class="elevation-3">
 							<v-img
-								wid
+								:contain="!userDetails.avatar.includes('https')"
 								:src="
 									userDetails.avatar.includes('https')
 										? userDetails.avatar
