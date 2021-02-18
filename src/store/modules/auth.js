@@ -98,6 +98,10 @@ export default {
 					email,
 					password
 				);
+
+				const newUser = AUTH.currentUser;
+				await newUser.sendEmailVerification();
+
 				const id = user.uid;
 				await DB.collection("users")
 					.doc(id)
@@ -132,6 +136,10 @@ export default {
 		async logout({ commit }) {
 			await AUTH.signOut();
 			commit("CLEAR_USER");
+		},
+		async changePassword(passdetails) {
+			const { oldPass, newPass } = passdetails;
+			console.log(oldPass, newPass);
 		},
 		async editDetails({ state, commit }, newDetails, password) {
 			if (newDetails?.email && state.user.email !== newDetails.email) {
