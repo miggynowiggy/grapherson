@@ -144,7 +144,7 @@
 
 	@media screen and (min-width: 1200px) {
 		.camera-container {
-			bottom: 3vh;
+			bottom: 2vh;
 			left: 48vw;
 		}
 	}
