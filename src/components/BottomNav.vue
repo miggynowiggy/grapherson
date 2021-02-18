@@ -120,4 +120,39 @@
 		align-self: center;
 		background-color: white;
 	}
+
+	@media screen and (min-width: 500px) {
+		.camera-container {
+			bottom: 2vh;
+			left: 42vw;
+		}
+	}
+
+	@media screen and (min-width: 800px) {
+		.camera-container {
+			bottom: 2vh;
+			left: 44vw;
+		}
+	}
+
+	@media screen and (min-width: 900px) {
+		.camera-container {
+			bottom: 2vh;
+			left: 46vw;
+		}
+	}
+
+	@media screen and (min-width: 1200px) {
+		.camera-container {
+			bottom: 3vh;
+			left: 48vw;
+		}
+	}
+
+	@media screen and (min-width: 1400px) {
+		.camera-container {
+			bottom: 3vh;
+			left: 48vw;
+		}
+	}
 </style>
