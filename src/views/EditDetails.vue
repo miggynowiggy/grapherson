@@ -17,8 +17,18 @@
 							/>
 						</v-avatar>
 					</v-row>
-					<v-row justify="center" class="mt-3" v-if="toggleEdit">
-						<v-col cols="3" v-for="avatar in avatars" :key="avatar.name">
+					<v-row
+						align="center"
+						justify="space-around"
+						class="mt-6"
+						v-if="toggleEdit"
+					>
+						<v-col
+							cols="3"
+							align="center"
+							v-for="avatar in avatars"
+							:key="avatar.name"
+						>
 							<v-btn fab size="50" @click="changeAvatar(avatar.name)">
 								<v-avatar>
 									<v-img
