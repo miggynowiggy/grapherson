@@ -40,6 +40,22 @@ export default {
 		ADD_RECORD(state, payload) {
 			state.records.unshift(payload);
 		},
+		UPDATE_RECORD(state, payload) {
+			const { id } = payload;
+			const index = state.records.findIndex((record) => record.id === id);
+
+			if (index !== -1) {
+				for (const [key, value] of Object.entries(payload)) {
+					state.records[index][key] = value;
+				}
+			}
+
+			if (payload.id === state.currentRecord.id) {
+				for (const [key, value] of Object.entries(payload)) {
+					state.currentRecord[key] = value;
+				}
+			}
+		},
 		SET_CURRENT_RECORD(state, payload) {
 			state.currentRecord = cloneDeep(payload);
 		},
@@ -217,6 +233,17 @@ export default {
 
 			await DB.collection("findings").add(recordToMove);
 			return true;
+		},
+		async saveName({ commit }, record) {
+			const { title, id } = record;
+			try {
+				await DB.collection("findings")
+					.doc(id)
+					.update({ title });
+				commit("UPDATE_RECORD", record);
+			} catch (err) {
+				throw err;
+			}
 		},
 	},
 };
