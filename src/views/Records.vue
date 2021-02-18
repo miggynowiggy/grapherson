@@ -6,6 +6,10 @@
 				<v-row wrap align="center" justify="center">
 					<v-col
 						cols="12"
+						xs="12"
+						sm="12"
+						md="7"
+						lg="9"
 						v-for="(result, index) in results"
 						:key="index"
 						class="px-6"
@@ -14,9 +18,9 @@
 							<v-card-subtitle class="grey--text mx-3">{{
 								result.date | formatDate
 							}}</v-card-subtitle>
-							<v-card-title class="mx-3 heading">{{
-								result.title
-							}}</v-card-title>
+							<v-card-title class="mx-3 heading">
+								{{ result.title }}
+							</v-card-title>
 						</v-card>
 					</v-col>
 				</v-row>
