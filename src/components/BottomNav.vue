@@ -69,15 +69,15 @@
 	}
 	.mainBox {
 		position: fixed;
-		width: 98vw;
+		width: 102vw;
 		bottom: 0;
 		display: flex;
 		flex-direction: row;
 		align-items: stretch;
 		justify-content: space-between;
 		height: 70px;
-		border-top-left-radius: 40px;
-		border-top-right-radius: 40px;
+		border-top-left-radius: 45px;
+		border-top-right-radius: 45px;
 		overflow: hidden;
 		background-color: white;
 		box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);

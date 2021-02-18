@@ -1,19 +1,27 @@
 <template>
 	<v-app>
 		<v-main style="overflow: hidden;">
-			<v-container fluid class="main">
-				<v-row justify="start" class="my-5 mx-2">
-					<v-avatar tile size="100">
-						<v-img
-							:src="require(`@/assets/avatars/mascot.png`)"
-							contain
-							alt="avatar"
-						/>
-					</v-avatar>
-					<h2 class="mt-10 primary--text">raphology</h2>
+			<v-container fluid class="main pt-6">
+				<v-row justify="center" align="center">
+					<v-col
+						cols="11"
+						align="center"
+						class="d-inline-flex flex-row align-center"
+					>
+						<v-avatar tile size="150">
+							<v-img
+								:src="require(`@/assets/avatars/mascot.png`)"
+								contain
+								alt="avatar"
+							/>
+						</v-avatar>
+						<h2 class="text-h4 font-weight-medium ml-n4 mt-3 primary--text">
+							raphology
+						</h2>
+					</v-col>
 				</v-row>
-				<v-row justify="center" class="my-5 mx-2">
-					<v-card class="pa-3">
+				<v-row justify="center" class="my-6 mx-2">
+					<v-card class="pa-3" elevation="12" outlined>
 						<v-card-title>What is Graphology?</v-card-title>
 						<v-card-text>
 							<span class="primary--text body-1 font-weight-medium"
@@ -46,33 +54,63 @@
 					</v-card>
 				</v-row>
 
-				<v-row>
-					<v-col>
-						<v-sheet
-							class="mx-auto"
-							max-width="500"
-						>
-							<v-slide-group
-								multiple
-								center-active
-							>
-								<v-slide-item
-									v-for="article in articles"
-									:key="article.link"
-								>
-									<v-card width="300" class="ma-2 pa-3" @click="openBrowser(article.link)">
-										<v-card-text>
-											<v-img 
-												:src="require(`@/assets/articles/${article.pic}`)"
-												contain
-												alt="article pic"
-											/>
-										</v-card-text>
-										<v-card-title>{{ article.name }}</v-card-title>
+				<v-row align="center" justify="center" wrap>
+					<v-col cols="11">
+						<v-divider class="my-1"></v-divider>
+					</v-col>
+					<v-col cols="11" class="mt-n3">
+						<p class="text-h6 font-weight-bold primary--text darken-3">
+							Articles to read on...
+						</p>
+					</v-col>
+					<v-col cols="12" class="mt-n6">
+						<v-sheet class="mx-auto" max-width="500">
+							<v-slide-group multiple center-active>
+								<v-slide-item v-for="(article, index) in articles" :key="index">
+									<v-card
+										width="300"
+										class="ma-4"
+										@click="openBrowser(article.link)"
+									>
+										<v-img
+											:src="require(`@/assets/articles/${article.pic}`)"
+											alt="article pic"
+											width="300"
+											height="200"
+										/>
+										<v-card-title class="pa-4 text-subtitle-2">{{
+											article.name
+										}}</v-card-title>
 									</v-card>
 								</v-slide-item>
 							</v-slide-group>
 						</v-sheet>
+					</v-col>
+				</v-row>
+
+				<v-row align="center" justify="space-around" wrap>
+					<v-col cols="11">
+						<v-divider class="my-1"></v-divider>
+					</v-col>
+					<v-col cols="11" class="mt-n3">
+						<p class="text-h6 font-weight-bold secondary--text darken-3">
+							Videos to binge watch...
+						</p>
+					</v-col>
+					<v-col cols="10" v-for="(video, index) in videos" :key="index">
+						<v-card outlined height="auto" width="322">
+							<iframe
+								width="320"
+								height="220"
+								:src="video.url"
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen
+							></iframe>
+							<v-card-title class="pa-3 text-subtitle-2">{{
+								video.title
+							}}</v-card-title>
+						</v-card>
 					</v-col>
 				</v-row>
 			</v-container>
@@ -83,19 +121,59 @@
 
 <script>
 	import BottomNav from "../components/BottomNav.vue";
-	import { Plugins } from '@capacitor/core';
+	import { Plugins } from "@capacitor/core";
 	export default {
 		name: "Home",
 		components: { BottomNav },
 		data: () => ({
 			articles: [
-				{ pic: "article1.png", name: "What Does Your Handwriting Say About You?", link: "https://www.pens.com/handwriting-infographic" },
+				{
+					pic: "article1.png",
+					name: "What Does Your Handwriting Say About You?",
+					link: "https://www.pens.com/handwriting-infographic",
+				},
+				{
+					pic: "article2.jpg",
+					name: "How Graphology can help the growth of the business",
+					link: "https://www.entrepreneur.com/article/351513",
+				},
+				{
+					pic: "article3.jpg",
+					name: "Graphology: The Psychology of Extraordinary Beliefs",
+					link: "https://u.osu.edu/vanzandt/2018/03/08/graphology/",
+				},
+				{
+					pic: "article3.jpg",
+					name: "Graphology Today: The Relevance of Graphology",
+					link:
+						"https://www.britishgraphology.org/about-british-institute-of-graphologists/graphology-today/",
+				},
+			],
+			videos: [
+				{
+					url: "https://www.youtube.com/embed/JWmafBBMHSk",
+					title:
+						"How to spot a leader in their handwriting | Jamie Mason Cohen | TEDxUBIWiltz",
+				},
+				{
+					url: "https://www.youtube.com/embed/G3bZibRU3kA",
+					title: "Hand Writing | Mobina Tazerjani | TEDxPristinePrivateSchool",
+				},
+				{
+					url: "https://www.youtube.com/embed/85bqT904VWA",
+					title:
+						"Why write? Penmanship for the 21st Century | Jake Weidmann | TEDxMileHigh",
+				},
 			],
 		}),
-		methods:{
+		methods: {
 			async openBrowser(source) {
 				const { Browser } = Plugins;
-				await Browser.open({ url: source, windowName: "_blank", presentationStyle: "popover" });
+				await Browser.open({
+					url: source,
+					windowName: "_blank",
+					presentationStyle: "popover",
+				});
 			},
 		},
 		computed: {
@@ -111,7 +189,7 @@
 
 <style>
 	.main {
-		max-height: 83vh;
+		max-height: 91vh;
 		overflow-y: scroll;
 		scroll-behavior: smooth;
 	}
