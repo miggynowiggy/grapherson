@@ -139,14 +139,14 @@
 				},
 				{
 					pic: "article3.jpg",
-					name: "Graphology: The Psychology of Extraordinary Beliefs",
-					link: "https://u.osu.edu/vanzandt/2018/03/08/graphology/",
-				},
-				{
-					pic: "article3.jpg",
 					name: "Graphology Today: The Relevance of Graphology",
 					link:
 						"https://www.britishgraphology.org/about-british-institute-of-graphologists/graphology-today/",
+				},
+				{
+					pic: "article3.jpg",
+					name: "Graphology: The Psychology of Extraordinary Beliefs",
+					link: "https://u.osu.edu/vanzandt/2018/03/08/graphology/",
 				},
 			],
 			videos: [
