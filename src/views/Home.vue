@@ -64,27 +64,25 @@
 						</p>
 					</v-col>
 					<v-col cols="12" class="mt-n6">
-						<v-sheet class="mx-auto" max-width="500">
-							<v-slide-group multiple center-active>
-								<v-slide-item v-for="(article, index) in articles" :key="index">
-									<v-card
+						<v-slide-group multiple center-active>
+							<v-slide-item v-for="(article, index) in articles" :key="index">
+								<v-card
+									width="300"
+									class="ma-4"
+									@click="openBrowser(article.link)"
+								>
+									<v-img
+										:src="require(`@/assets/articles/${article.pic}`)"
+										alt="article pic"
 										width="300"
-										class="ma-4"
-										@click="openBrowser(article.link)"
-									>
-										<v-img
-											:src="require(`@/assets/articles/${article.pic}`)"
-											alt="article pic"
-											width="300"
-											height="200"
-										/>
-										<v-card-title class="pa-4 text-subtitle-2">{{
-											article.name
-										}}</v-card-title>
-									</v-card>
-								</v-slide-item>
-							</v-slide-group>
-						</v-sheet>
+										height="200"
+									/>
+									<v-card-title class="pa-4 text-subtitle-2">{{
+										article.name
+									}}</v-card-title>
+								</v-card>
+							</v-slide-item>
+						</v-slide-group>
 					</v-col>
 				</v-row>
 
@@ -97,7 +95,15 @@
 							Videos to binge watch...
 						</p>
 					</v-col>
-					<v-col cols="10" v-for="(video, index) in videos" :key="index">
+					<v-col
+						xs="10"
+						sm="10"
+						md="4"
+						lg="4"
+						align="center"
+						v-for="(video, index) in videos"
+						:key="index"
+					>
 						<v-card outlined height="auto" width="322">
 							<iframe
 								width="320"
@@ -189,7 +195,7 @@
 
 <style>
 	.main {
-		max-height: 91vh;
+		max-height: 90vh;
 		overflow-y: scroll;
 		scroll-behavior: smooth;
 	}
