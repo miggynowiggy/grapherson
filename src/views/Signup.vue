@@ -98,8 +98,7 @@
 							:loading="buttonDisabled"
 							@click="back"
 						>
-							<span v-if="steps < 2">Cancel</span>
-							<span v-else>Back</span>
+							<span>Cancel</span>
 						</v-btn>
 					</v-col>
 				</v-row>
@@ -125,20 +124,21 @@
 			password: null,
 			showPassword: false,
 			buttonDisabled: false,
+			guest: false,
 		}),
 		mounted() {
 			const { name } = this.$store.getters["auth/USER"];
 			if (name) {
 				this.name = name;
+				this.guest = true;
 			}
 		},
 		methods: {
 			async back() {
-				if (this.steps === 1) {
+				if(this.guest)
+					this.$router.push({ name: "Settings" });
+				else
 					this.$router.push({ name: "Login" });
-				} else {
-					this.steps = 1;
-				}
 			},
 			async proceed() {
 				const isLoginFormValid = this.$refs.loginInfo.validate();
