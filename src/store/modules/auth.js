@@ -7,9 +7,7 @@ export default {
 	state: {
 		user: {
 			name: null,
-			age: null,
 			id: null,
-			gender: null,
 			email: null,
 		},
 		googleProvider: null,
@@ -31,8 +29,6 @@ export default {
 			state.user = {
 				id: null,
 				name: null,
-				age: null,
-				gender: null,
 				email: null,
 			};
 		},
@@ -93,7 +89,7 @@ export default {
 		},
 		async registerManually({ commit, dispatch }, userDetails) {
 			try {
-				const { name, age, gender, avatar, email, password } = userDetails;
+				const { name, avatar, email, password } = userDetails;
 				const { user } = await AUTH.createUserWithEmailAndPassword(
 					email,
 					password
@@ -105,8 +101,8 @@ export default {
 				const id = user.uid;
 				await DB.collection("users")
 					.doc(id)
-					.set({ name, email, age, gender, avatar });
-				commit("SET_USER", { name, email, age, gender, avatar, id });
+					.set({ name, email, avatar });
+				commit("SET_USER", { name, email, avatar, id });
 
 				dispatch("plugins/ENABLE_CAMERA", null, { root: true });
 			} catch (err) {
@@ -121,8 +117,6 @@ export default {
 				const newUser = {
 					name: user.displayName,
 					email: user.email,
-					age: 0,
-					gender: null,
 					id: user.uid,
 				};
 				await DB.collection("users")
