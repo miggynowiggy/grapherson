@@ -73,38 +73,6 @@
 							/>
 						</v-col>
 					</v-row>
-					<v-row align="center" justify="start" wrap class="mt-n7">
-						<v-col cols="12">
-							<v-text-field
-								v-model="user.age"
-								label="Age"
-								type="number"
-								color="primary"
-								rounded
-								outlined
-								required
-								dense
-								:disabled="!toggleEdit"
-							/>
-						</v-col>
-					</v-row>
-					<v-row align="center" justify="start" wrap class="mt-n12">
-						<v-col cols="12">
-							<v-radio-group
-								v-model="user.gender"
-								label="Gender"
-								:disabled="!toggleEdit"
-								required
-							>
-								<v-radio
-									v-for="(gender, index) in genders"
-									:key="index"
-									:label="gender.name"
-									:value="gender.value"
-								/>
-							</v-radio-group>
-						</v-col>
-					</v-row>
 					<v-divider class="my-2" />
 					<v-row
 						align="center"
@@ -198,20 +166,11 @@
 			toggleEdit: false,
 			user: {
 				name: null,
-				age: null,
-				gender: null,
 				avatar: null,
 				email: null,
 			},
-			genders: [
-				{ name: "Male", value: "male" },
-				{ name: "Female", value: "female" },
-				{ name: "Prefer not to Say", value: "others" },
-			],
 			oldState: {
 				name: null,
-				age: null,
-				gender: null,
 				avatar: null,
 			},
 			saveBtn: false,
@@ -229,13 +188,11 @@
 			],
 		}),
 		async created() {
-			const { name, age, gender, email, avatar } = this.$store.getters[
+			const { name, email, avatar } = this.$store.getters[
 				"auth/USER"
 			];
 			this.user = {
 				name,
-				age,
-				gender,
 				avatar,
 				email,
 			};

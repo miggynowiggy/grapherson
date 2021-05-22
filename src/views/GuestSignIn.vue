@@ -23,35 +23,6 @@
 								color="primary"
 							></v-text-field>
 						</v-col>
-						<v-col cols="12" class="mt-n4">
-							<v-text-field
-								label="Age*"
-								type="number"
-								v-model="age"
-								:rules="basicRules"
-								filled
-								rounded
-								outlined
-								single-line
-								color="primary"
-							></v-text-field>
-						</v-col>
-						<v-col cols="12" class="mt-n7">
-							<v-radio-group
-								v-model="gender"
-								:rules="basicRules"
-								column
-								label="Gender*"
-							>
-								<v-radio
-									v-for="gender in genders"
-									:key="gender.name"
-									:label="gender.name"
-									:value="gender.value"
-									color="primary"
-								></v-radio>
-							</v-radio-group>
-						</v-col>
 					</v-row>
 				</v-form>
 				<v-row align="center" justify="center">
@@ -91,8 +62,6 @@
 		components: { AppBar },
 		data: () => ({
 			name: null,
-			age: null,
-			gender: null,
 			proceedBtn: false,
 		}),
 		methods: {
@@ -104,8 +73,6 @@
 				this.proceedBtn = true;
 				await this.$store.dispatch("auth/registerGuest", {
 					name: this.name,
-					age: this.age,
-					gender: this.gender,
 					avatar: "plain.png",
 				});
 				this.proceedBtn = true;
