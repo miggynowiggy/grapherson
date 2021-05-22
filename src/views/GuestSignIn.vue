@@ -8,7 +8,7 @@
 						<div
 							class="headline primary--text text-left font-weight-bold mb-10 mt-5"
 						>
-							PERSONAL DETAILS
+							How should Grapherson call you?
 						</div>
 						<v-col cols="12" class="mt-n4">
 							<v-text-field
