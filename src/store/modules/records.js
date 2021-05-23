@@ -179,7 +179,7 @@ export default {
 		async generateRecord({ rootGetters, state, commit, dispatch }) {
 			try {
 				const user = rootGetters["auth/USER"];
-				const isUserLoggedIn = rootGetters["auth/IS_USER_LOGGED_IN"];
+				const isUserLoggedIn = rootGetters["auth/IS_USER_SIGNED_IN"];
 				const downloadURL = await dispatch("plugins/upload_image", null, {
 					root: true,
 				});
@@ -192,7 +192,9 @@ export default {
 				const newFindings = {
 					title: days().format("MMM DD YYYY"),
 					date: days().format("x"),
-					userId: isUserLoggedIn ? user.id : null,
+					userId: isUserLoggedIn 
+						? user.id 
+						: null,
 					downloadURL,
 					ratings,
 					findings,
