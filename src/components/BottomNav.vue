@@ -30,10 +30,18 @@
 					"plugins/IS_CAMERA_ENABLED"
 				];
 				if (isCameraEnabled) {
-					this.$router.push({ name: "Analyze" });
+					const records  = await this.$store.getters['records/ALL_RECORDS'];
+					if(records.length < 3)
+						this.$router.push({ name: "Analyze" });
+					else
+						await Toast.show({
+							text: "Free users have a limit of 3 tests",
+							position: "top",
+							duration: "long"
+						});
 				} else {
 					await Toast.show({
-						text: "Please register or login to use the camera",
+						text: "Guests have a limit of 1 test",
 						position: "top",
 						duration: "long",
 					});
