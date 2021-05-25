@@ -10,6 +10,7 @@ const { StatusBar, Device, SplashScreen } = Plugins;
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import LottiePlayer from "lottie-player-vue";
 import { AUTH } from "./config/firebase";
+require('typeface-poppins')
 
 Vue.config.productionTip = false;
 Vue.use(LottiePlayer);

@@ -27,12 +27,13 @@
 	export default {
 		name: "Process",
 		async mounted() {
-			this.timerId = setInterval(() => {
-				this.showNextMessage();
-			}, 6000);
-			setTimeout(() => {
-				this.$store.dispatch("records/generateRecord");
-			}, 1500);
+			this.runTimer();
+			// this.timerId = setInterval(() => {
+			// 	this.showNextMessage();
+			// }, 6000);
+			// setTimeout(() => {
+			// 	this.$store.dispatch("records/generateRecord");
+			// }, 1500);
 		},
 		data: () => ({
 			displayMessages: [
@@ -54,14 +55,22 @@
 			timeId: null,
 		}),
 		methods: {
+			runTimer() {
+				if (!this.timerId) {
+					this.timerId = setInterval(() => {
+						this.showNextMessage();
+					}, 6000)
+				}
+			},
 			clearTimer() {
 				clearInterval(this.timerId);
 				this.$router.push({ name: "ViewRecord" });
 			},
-			showNextMessage() {
-				if (this.progress !== this.displayMessages.length - 1) {
+			async showNextMessage() {
+				if (this.progress < this.displayMessages.length) {
 					this.progress += 1;
-				} else {
+				} else if (this.progress === this.displayMessages.length) {
+					await this.$store.dispatch("records/generateRecord");
 					this.clearTimer();
 				}
 			},
