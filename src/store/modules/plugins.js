@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-empty-pattern */
 import { Plugins, CameraResultType } from "@capacitor/core";
 import { STORAGE, AUTH } from "../../config/firebase";
 import { nanoid } from "nanoid";
-const { Camera, Storage } = Plugins;
+const { Camera, Storage, Filesystem } = Plugins;
 
 const bucket = STORAGE.ref("handwritings");
 const avatarBucket = STORAGE.ref("avatars");
@@ -38,30 +40,46 @@ export default {
 			state.enableCamera = false;
 		},
 		async takePicture({ commit }) {
-			const image = await Camera.getPhoto({
-				source: "CAMERA",
-				quality: 90,
-				resultType: CameraResultType.DataUrl,
-				format: "jpeg",
+			// const image = await Camera.getPhoto({
+			// 	source: "CAMERA",
+			// 	quality: 90,
+			// 	resultType: CameraResultType.DataUrl,
+			// 	format: "jpeg",
+			// });
+			return new Promise((resolve, reject) => {
+				scan.scanDoc(
+					(img) => {
+						commit("SET_CAPTURED_PHOTO", img);
+						resolve(img);
+					},
+					(err) => reject(err),
+					{ sourceType: 1, returnBase64: true }
+				)
 			});
-			commit("SET_CAPTURED_PHOTO", image.dataUrl);
-			return image;
 		},
 		async getGalleryPhoto({ commit }) {
-			const image = await Camera.getPhoto({
-				source: "PHOTOS",
-				quality: 90,
-				resultType: CameraResultType.DataUrl,
-				format: "jpeg",
+			// const image = await Camera.getPhoto({
+			// 	source: "PHOTOS",
+			// 	quality: 90,
+			// 	resultType: CameraResultType.DataUrl,
+			// 	format: "jpeg",
+			// });
+			return new Promise((resolve, reject) => {
+				scan.scanDoc(
+					(img) => {
+						commit("SET_CAPTURED_PHOTO", img);
+						resolve(img);
+					},
+					(err) => reject(err),
+					{ sourceType: 0, returnBase64: true }
+				)
 			});
-			commit("SET_CAPTURED_PHOTO", image.dataUrl);
-			return image;
 		},
 		async upload_image({ state }) {
 			const fileId = nanoid();
 			await bucket
 				.child(`${fileId}.jpg`)
-				.putString(state.capturePhoto, "data_url");
+				.putString(state.capturePhoto, "base64");
 			const downloadUrl = await bucket.child(`${fileId}.jpg`).getDownloadURL();
 			return downloadUrl;
 		},

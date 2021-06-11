@@ -27,13 +27,7 @@
 	export default {
 		name: "Process",
 		async mounted() {
-			this.runTimer();
-			// this.timerId = setInterval(() => {
-			// 	this.showNextMessage();
-			// }, 6000);
-			// setTimeout(() => {
-			// 	this.$store.dispatch("records/generateRecord");
-			// }, 1500);
+			await this.processImage();
 		},
 		data: () => ({
 			displayMessages: [
@@ -55,25 +49,26 @@
 			timeId: null,
 		}),
 		methods: {
-			runTimer() {
-				if (!this.timerId) {
-					this.timerId = setInterval(() => {
-						this.showNextMessage();
-					}, 6000)
-				}
-			},
-			clearTimer() {
-				clearInterval(this.timerId);
-				this.$router.push({ name: "ViewRecord" });
-			},
-			async showNextMessage() {
-				if (this.progress < this.displayMessages.length) {
-					this.progress += 1;
-				} else if (this.progress === this.displayMessages.length) {
-					await this.$store.dispatch("records/generateRecord");
-					this.clearTimer();
-				}
-			},
+			async processImage() {
+				return new Promise((resolve, reject) => {
+					this.$store.dispatch("records/generateRecord")
+						.then(() => {
+							this.$router.push({ name: "ViewRecord" });
+							resolve(true);
+						})
+						.catch(error => reject(error));
+
+					for (let index = 0; index < this.displayMessages.length; index++) {
+						if (this.progress !== this.displayMessages.lenght - 1) {
+							this.progress = index;
+						} else {
+							this.progress = 0;
+							index = 0;
+						}
+						setTimeout(null, 1500);
+					}
+				})
+			}
 		},
 	};
 </script>
