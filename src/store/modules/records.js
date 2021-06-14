@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-useless-catch */
 import { cloneDeep } from "lodash";
-import { AUTH, DB } from "@/config/firebase";
+import { AUTH, DB, STORAGE } from "@/config/firebase";
 import days from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 days.extend(advancedFormat);
@@ -55,6 +56,13 @@ export default {
 					state.currentRecord[key] = value;
 				}
 			}
+		},
+		DELETE_RECORD(state, payload) {
+			const { id } = payload;
+			if (!id) return;
+
+			const index = state.records.findIndex((record) => record.id === id);
+			if (index !== -1) state.records.splice(index, 1);
 		},
 		SET_CURRENT_RECORD(state, payload) {
 			state.currentRecord = cloneDeep(payload);
@@ -180,7 +188,7 @@ export default {
 			try {
 				const user = rootGetters["auth/USER"];
 				const isUserLoggedIn = rootGetters["auth/IS_USER_SIGNED_IN"];
-				const downloadURL = await dispatch("plugins/upload_image", null, {
+				const { downloadURL, fileName } = await dispatch("plugins/upload_image", null, {
 					root: true,
 				});
 
@@ -192,13 +200,14 @@ export default {
 				const newFindings = {
 					title: days().format("MMM DD YYYY"),
 					date: days().format("x"),
-					userId: isUserLoggedIn 
-						? user.id 
+					userId: isUserLoggedIn
+						? user.id
 						: null,
 					downloadURL,
 					ratings,
 					findings,
 					interpretation,
+					fileName
 				};
 
 				let id;
@@ -247,5 +256,16 @@ export default {
 				throw err;
 			}
 		},
+		async delete({ commit, state }, DeleteRecord) {
+			const { id } = DeleteRecord;
+			try {
+				const record = state.records.find(r => r.id === id);
+				await STORAGE.ref("handwritings").child(record.fileName).delete();
+				await DB.collection("findings").doc(id).delete();
+				commit("DELETE_RECORD", record);
+			} catch(err) {
+				throw err;
+			}
+		}
 	},
 };

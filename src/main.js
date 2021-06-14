@@ -20,6 +20,8 @@ SplashScreen.show({ autoHide: false });
 Device.getInfo().then((info) => {
 	console.log("device info: ", info);
 	store.commit("plugins/SET_DEVICE_UUID", info.uuid);
+	store.commit("plugins/SET_DEVICE_PLATFORM", info.platform);
+
 	if (info.platform !== "web") {
 		StatusBar.setOverlaysWebView({ overlay: false });
 		StatusBar.setBackgroundColor({ color: "#00B882" });

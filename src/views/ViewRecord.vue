@@ -50,6 +50,18 @@
 							<span class="font-weight-bold">Edit this finding's title</span>
 						</v-btn>
 					</v-col>
+					<v-col xs="10" sm="10" md="3" lg="3" align="center">
+						<v-btn
+							rounded
+							color="error"
+							dark
+							block
+							depressed
+							@click="showDelete = true"
+						>
+							<span class="font-weight-bold">Delete this Findings</span>
+						</v-btn>
+					</v-col>
 				</v-row>
 			</v-container>
 			<v-dialog
@@ -95,6 +107,51 @@
 					</v-card-text>
 				</v-card>
 			</v-dialog>
+
+			<v-dialog
+				persistent
+				v-model="showDelete"
+				:width="$vuetify.breakpoint.mobile ? 'auto' : '45vw'"
+			>
+				<v-card>
+					<v-card-title class="error white--text dark font-weight-bold">
+						Delete this findings?
+						<v-spacer></v-spacer>
+						<v-btn icon small @click="showDelete = false">
+							<v-icon color="white">close</v-icon>
+						</v-btn>
+					</v-card-title>
+					<v-card-text class="py-8">
+						<v-row align="center" justify="center" dense>
+							<v-col cols="11" align="center">
+								<v-btn
+									depressed
+									rounded
+									color="error"
+									class="mt-5"
+									dark
+									block
+									:loading="deleteLoading"
+									@click="deleteFindings"
+								>Yes</v-btn>
+							</v-col>
+							<v-col cols="11" align="center">
+								<v-btn
+									outlined
+									rounded
+									color="black lighten-2"
+									class="mt-5"
+									dark
+									block
+									@click="showDelete = false"
+								>
+									No
+								</v-btn>
+							</v-col>
+						</v-row>
+					</v-card-text>
+				</v-card>
+			</v-dialog>
 		</v-main>
 	</v-app>
 </template>
@@ -113,6 +170,8 @@
 			editDialog: false,
 			newTitle: null,
 			saveLoading: false,
+			showDelete: false,
+			deleteLoading: false
 		}),
 		methods: {
 			back() {
@@ -136,6 +195,15 @@
 				this.saveLoading = false;
 				this.editDialog = false;
 			},
+			async deleteFindings() {
+				this.deleteLoading = false;
+				await this.$store.dispatch("records/delete", {
+					id: this.record.id
+				});
+				this.deleteLoading = false;
+				this.showDelete = false;
+				this.$router.go(-1);
+			}
 		},
 		computed: {
 			record() {

@@ -15,11 +15,13 @@ export default {
 		capturePhoto: null,
 		deviceId: null,
 		enableCamera: true,
+		platform: 'web'
 	},
 	getters: {
 		CAPTURE_PHOTO: (state) => state.capturePhoto,
 		DEVICE_ID: (state) => state.deviceId,
 		IS_CAMERA_ENABLED: (state) => state.enableCamera,
+		DEVICE_PLATFORM: (state) => state.platform
 	},
 	mutations: {
 		SET_CAPTURED_PHOTO(state, payload) {
@@ -30,6 +32,9 @@ export default {
 		},
 		CLEAR_CAPTURED_PHOTO(state) {
 			state.capturePhoto = null;
+		},
+		SET_DEVICE_PLATFORM(state, payload) {
+			state.platform = payload;
 		}
 	},
 	actions: {
@@ -39,13 +44,19 @@ export default {
 		DISABLE_CAMERA({ state }) {
 			state.enableCamera = false;
 		},
-		async takePicture({ commit }) {
-			// const image = await Camera.getPhoto({
-			// 	source: "CAMERA",
-			// 	quality: 90,
-			// 	resultType: CameraResultType.DataUrl,
-			// 	format: "jpeg",
-			// });
+		async takePicture({ state, commit }) {
+			if (state.platform === 'web') {
+				const image = await Camera.getPhoto({
+					source: "CAMERA",
+					quality: 90,
+					resultType: CameraResultType.Base64,
+					format: "jpeg",
+				});
+				console.log(image);
+				commit("SET_CAPTURED_PHOTO", image.base64String);
+				return image.dataUrl;
+			}
+
 			return new Promise((resolve, reject) => {
 				scan.scanDoc(
 					(img) => {
@@ -57,13 +68,18 @@ export default {
 				)
 			});
 		},
-		async getGalleryPhoto({ commit }) {
-			// const image = await Camera.getPhoto({
-			// 	source: "PHOTOS",
-			// 	quality: 90,
-			// 	resultType: CameraResultType.DataUrl,
-			// 	format: "jpeg",
-			// });
+		async getGalleryPhoto({ state, commit }) {
+			if (state.platform === 'web') {
+				const image = await Camera.getPhoto({
+					source: "PHOTOS",
+					quality: 90,
+					resultType: CameraResultType.Base64,
+					format: "jpeg",
+				});
+				commit("SET_CAPTURED_PHOTO", image.base64String);
+				return image.dataUrl;
+			}
+
 			return new Promise((resolve, reject) => {
 				scan.scanDoc(
 					(img) => {
@@ -77,11 +93,16 @@ export default {
 		},
 		async upload_image({ state }) {
 			const fileId = nanoid();
+			const dateNow = Date.now();
 			await bucket
-				.child(`${fileId}.jpg`)
+				.child(`${dateNow}_${fileId}.jpg`)
 				.putString(state.capturePhoto, "base64");
-			const downloadUrl = await bucket.child(`${fileId}.jpg`).getDownloadURL();
-			return downloadUrl;
+			const downloadUrl = await bucket.child(`${dateNow}_${fileId}.jpg`).getDownloadURL();
+
+			return {
+				downloadURL: downloadUrl,
+				fileName: `${dateNow}_${fileId}`
+			};
 		},
 		async upload_avatar({ state, commit }) {
 			const uid = AUTH.currentUser.uid;
