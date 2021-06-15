@@ -5,9 +5,40 @@ import { Plugins, CameraResultType } from "@capacitor/core";
 import { STORAGE, AUTH } from "../../config/firebase";
 import { nanoid } from "nanoid";
 const { Camera, Storage, Filesystem } = Plugins;
+import ScanbotSdk from 'cordova-plugin-scanbot-sdk';
 
 const bucket = STORAGE.ref("handwritings");
 const avatarBucket = STORAGE.ref("avatars");
+
+const SBSDK = ScanbotSdk.promisify();
+
+const initializeScanBot = () => {
+	let license = "XYSE/QQTlaEgU4kr/TvMvWKlTyhtkl" +
+  "cYO2O2+XhbewTEgqRsOMhhygjZfnbo" +
+  "Uw5wJ9ah0+DA5qBUFMwUqQk6i/4voW" +
+  "VT/navc6uPO43qrhFfpQ6tkYjogKsb" +
+  "ckbLpDxGUIe3Zz5ZqIt9znznW11LLl" +
+  "i/K3VTpp/U6TuJo/oGqIP+Xsf6SYQV" +
+  "LG/TX3zuy7w4Mo6zO52wbt6ZwS1+Na" +
+  "AX2vHCK2GgBoz5fUqrPuQ/TkDtVCvs" +
+  "7+MkdhKcScxYnmctPaVMqPu+AZ7lWz" +
+  "fdya7CRaebAzLQbrLncBUpchUFCiWV" +
+  "zM+t+gNeHB/4FS0LojOnUZS8EHmnSe" +
+  "uQ5rr1ZkBuug==\nU2NhbmJvdFNESw" +
+  "pjb20uZ3JhcGhlcnNvbgoxNjI2NDc5" +
+  "OTk5CjgzODg2MDcKMw==\n";
+
+	let opts = {
+		license: license,
+		loggingEnabled: false,
+		storageImageFormat: 'PNG',
+		storageImageQuality: 80,
+	};
+	const SBSDK = ScanbotSdk.promisify();
+	return SBSDK.initializeSdk(opts)
+		.then((result) => console.log('SBSDK INIT: ', result))
+		.catch((error) => console.log('SBSDK INIT ERROR: ', error));
+}
 
 export default {
 	namespaced: true,
@@ -57,14 +88,42 @@ export default {
 				return image.dataUrl;
 			}
 
+			// try {
+			// 	await initializeScanBot();
+
+			// 	const result = await SBSDK.UI.startDocumentScanner({
+			// 		uiConfigs: {
+			// 			flashEnabled: true,
+			// 			multiPageEnabled: false
+			// 		}
+			// 	});
+
+			// 	const filteredDoc = await SBSDK.applyImageFilter({
+			// 		imageFileUri: result.pages[0].documentImageFileUri,
+			// 		imageFilter: 'PURE_BINARIZED',
+			// 		quality: 80
+			// 	});
+
+			// 	const image = await Filesystem.readFile({
+			// 		path: filteredDoc.imageFileUri
+			// 		// path: result.pages[0].documentImageFileUri
+			// 	});
+
+			// 	commit("SET_CAPTURED_PHOTO", image);
+			// 	return image;
+			// } catch (err) {
+			// 	console.log(err);
+			// 	return null;
+			// }
+
 			return new Promise((resolve, reject) => {
 				scan.scanDoc(
-					(img) => {
+					async (img) => {
 						commit("SET_CAPTURED_PHOTO", img);
 						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 1, returnBase64: true, quality: 2.5 }
+					{ sourceType: 0, returnBase64: true, quality: 2 }
 				)
 			});
 		},
@@ -87,7 +146,7 @@ export default {
 						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 0, returnBase64: true, quality: 2.5 }
+					{ sourceType: 0, returnBase64: true, quality: 2 }
 				)
 			});
 		},

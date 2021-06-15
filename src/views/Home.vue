@@ -1,5 +1,5 @@
 <template>
-	<v-app>
+	<v-app class="body">
 		<v-main style="overflow: hidden;">
 			<v-container fluid class="main pt-6">
 				<v-row justify="center" align="center">
@@ -198,5 +198,8 @@
 		max-height: 90vh;
 		overflow-y: scroll;
 		scroll-behavior: smooth;
+	}
+	.body {
+		padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 	}
 </style>

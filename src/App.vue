@@ -1,7 +1,5 @@
 <template>
-	<transition :name="transitionMode">
-		<router-view></router-view>
-	</transition>
+	<router-view></router-view>
 </template>
 
 <script>
@@ -32,5 +30,8 @@
 			#efeeec 75%,
 			#e9e9e7 100%
 		);
+	}
+	.body {
+		padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 	}
 </style>

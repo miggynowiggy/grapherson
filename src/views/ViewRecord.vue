@@ -1,5 +1,5 @@
 <template>
-	<v-app>
+	<v-app class="body">
 		<AppBar :pageTitle="record.title" />
 		<v-main>
 			<v-container fluid>
@@ -215,3 +215,8 @@
 		},
 	};
 </script>
+<style>
+	.body {
+		padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+	}
+</style>

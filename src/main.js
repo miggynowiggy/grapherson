@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-prototype-builtins */
 import Vue from "vue";
 import App from "./App.vue";
@@ -9,7 +10,8 @@ import { Plugins } from "@capacitor/core";
 const { StatusBar, Device, SplashScreen } = Plugins;
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import LottiePlayer from "lottie-player-vue";
-import { AUTH } from "./config/firebase";
+import { AUTH } from './config/firebase';
+
 require('typeface-poppins')
 
 Vue.config.productionTip = false;
@@ -26,10 +28,6 @@ Device.getInfo().then((info) => {
 		StatusBar.setOverlaysWebView({ overlay: false });
 		StatusBar.setBackgroundColor({ color: "#00B882" });
 	}
-});
-
-window.addEventListener("deviceready", () => {
-	store.dispatch("auth/SET_GOOGLE_PROVIDER");
 });
 
 AUTH.onAuthStateChanged(async (user) => {
@@ -72,7 +70,7 @@ AUTH.onAuthStateChanged(async (user) => {
 		}
 	}
 
-	SplashScreen.hide();
+	await SplashScreen.hide();
 });
 
 defineCustomElements(window);

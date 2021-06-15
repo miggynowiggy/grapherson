@@ -41,10 +41,18 @@
 			async takeImage(mode) {
 				this.bottomSheet = false;
 				if (mode === "camera") {
-					await this.$store.dispatch("plugins/takePicture");
+					const img = await this.$store.dispatch("plugins/takePicture");
+
+					if (!img) {
+						return false;
+					}
+
 					this.$emit("imageTaken");
 				} else {
-					await this.$store.dispatch("plugins/getGalleryPhoto");
+					const img = await this.$store.dispatch("plugins/getGalleryPhoto");
+					if (!img) {
+						return false;
+					}
 					this.$emit("imageTaken");
 				}
 			},
