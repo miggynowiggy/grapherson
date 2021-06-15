@@ -64,7 +64,7 @@ export default {
 						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 1, returnBase64: true }
+					{ sourceType: 1, returnBase64: true, quality: 2.5 }
 				)
 			});
 		},
@@ -87,21 +87,20 @@ export default {
 						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 0, returnBase64: true }
+					{ sourceType: 0, returnBase64: true, quality: 2.5 }
 				)
 			});
 		},
 		async upload_image({ state }) {
-			const fileId = nanoid();
-			const dateNow = Date.now();
+			const fileName = `${nanoid()}_${Date.now()}.png`
 			await bucket
-				.child(`${dateNow}_${fileId}.jpg`)
+				.child(fileName)
 				.putString(state.capturePhoto, "base64");
-			const downloadUrl = await bucket.child(`${dateNow}_${fileId}.jpg`).getDownloadURL();
+			const downloadUrl = await bucket.child(fileName).getDownloadURL();
 
 			return {
 				downloadURL: downloadUrl,
-				fileName: `${dateNow}_${fileId}`
+				fileName: fileName
 			};
 		},
 		async upload_avatar({ state, commit }) {
