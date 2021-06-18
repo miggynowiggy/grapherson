@@ -10,7 +10,8 @@
     "capacitor:serve": "vue-cli-service capacitor:serve",
     "dev": "yarn cap copy && yarn capacitor:serve --android",
     "dev-ios": "yarn cap copy && yarn capacitor:serve --ios",
-    "generate-icon-splash": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy"
+    "generate-icon-splash": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy",
+    "start-api": "ml-api\\venv\\Scripts\\activate && python ml-api/app.py"
   },
   "dependencies": {
     "@capacitor/android": "^2.4.6",
@@ -21,6 +22,7 @@
     "@ionic-native/document-scanner": "^5.33.1",
     "@ionic/pwa-elements": "^3.0.2",
     "@vue/cli": "^4.5.13",
+    "axios": "^0.21.1",
     "cordova-plugin-document-scanner": "^4.2.6",
     "cordova-plugin-scanbot-sdk": "^4.10.0",
     "core-js": "^3.6.5",

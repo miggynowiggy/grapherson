@@ -223,14 +223,14 @@ def start(filename):
             print("Social Isolation: ", socialIsolation)
 
             return {
-                'emotionalStability': emotionalStability[0],
-                'mentalEnergy': mentalEnergy[0],
+                'emotional_stability': emotionalStability[0],
+                'will_power': mentalEnergy[0],
                 'modesty': modesty[0],
-                'harmony': harmony[0],
+                'harmony_flexibility': harmony[0],
                 'discipline': discipline[0],
                 'concentration': concentration[0],
                 'communicativeness': communicativeness[0],
-                'socialIsolation': socialIsolation[0]
+                'sociability': socialIsolation[0]
             }
 
         #=================================================================================================
