@@ -25,7 +25,7 @@ def analyze():
 
     savedFile = download_file.start(filename, downloadURL)
     results = train_predict.start(savedFile)
-    os.remove(savedFile)
+    # os.remove(savedFile)
     return jsonify(results), 200
 
 if __name__ == "__main__":

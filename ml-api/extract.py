@@ -768,7 +768,8 @@ def start(file_name):
     global SLANT_ANGLE
 
     # read image from disk
-    image = cv2.imread(file_name)
+    # image = cv2.imread(file_name)
+    image = file_name
     #cv2.imshow(file_name,image)
 
     # resize the image if width is greater than 850px
