@@ -81,7 +81,7 @@ export default {
 					source: "CAMERA",
 					quality: 90,
 					resultType: CameraResultType.Base64,
-					format: "jpeg",
+					format: "png",
 				});
 				console.log(image);
 				commit("SET_CAPTURED_PHOTO", image.base64String);
@@ -119,11 +119,15 @@ export default {
 			return new Promise((resolve, reject) => {
 				scan.scanDoc(
 					async (img) => {
-						commit("SET_CAPTURED_PHOTO", img);
-						resolve(img);
+						console.log('CAPTURED PHOTO: ', img);
+						const image = await Filesystem.readFile({
+							path: img
+						});
+						commit("SET_CAPTURED_PHOTO", image);
+						resolve(image);
 					},
 					(err) => reject(err),
-					{ sourceType: 0, returnBase64: true, quality: 2 }
+					{ sourceType: 1, quality: 2.5 }
 				)
 			});
 		},
@@ -133,7 +137,7 @@ export default {
 					source: "PHOTOS",
 					quality: 90,
 					resultType: CameraResultType.Base64,
-					format: "jpeg",
+					format: "png",
 				});
 				commit("SET_CAPTURED_PHOTO", image.base64String);
 				return image.dataUrl;
@@ -141,12 +145,15 @@ export default {
 
 			return new Promise((resolve, reject) => {
 				scan.scanDoc(
-					(img) => {
-						commit("SET_CAPTURED_PHOTO", img);
-						resolve(img);
+					async (img) => {
+						const image = await Filesystem.readFile({
+							path: img
+						});
+						commit("SET_CAPTURED_PHOTO", image);
+						resolve(image);
 					},
 					(err) => reject(err),
-					{ sourceType: 0, returnBase64: true, quality: 2 }
+					{ sourceType: 0, quality: 2.5 }
 				)
 			});
 		},

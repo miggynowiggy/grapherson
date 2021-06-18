@@ -58,14 +58,18 @@
 						})
 						.catch(error => reject(error));
 
-					for (let index = 0; index < this.displayMessages.length; index++) {
-						if (this.progress !== this.displayMessages.lenght - 1) {
-							this.progress = index;
-						} else {
-							this.progress = 0;
-							index = 0;
-						}
-						setTimeout(null, 1500);
+					let stop = false;
+					let index = 0;
+					while (!stop) {
+						setTimeout(() => {
+							if (this.progress !== this.displayMessages.length - 1) {
+								this.progress = index;
+								index += 1;
+							} else {
+								this.progress = 0;
+								index = 0;
+							}
+						}, 1500);
 					}
 				})
 			}

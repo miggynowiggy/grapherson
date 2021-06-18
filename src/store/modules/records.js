@@ -4,6 +4,7 @@
 import { cloneDeep } from "lodash";
 import { AUTH, DB, STORAGE } from "@/config/firebase";
 import days from "dayjs";
+import axios from 'axios';
 import advancedFormat from "dayjs/plugin/advancedFormat";
 days.extend(advancedFormat);
 
@@ -111,78 +112,6 @@ export default {
 				dispatch("plugins/ENABLE_CAMERA", null, { root: true });
 			}
 		},
-		async generateRandomData() {
-			const findings = [
-				"Introvert",
-				"Extrovert",
-				"Depression tendencies",
-				"Anxiety tendencies",
-			];
-			const interpretation = [
-				{
-					text: `You tend to be more focused on your internal feelings.\nYou are usually quiet, reserved, and reflective.\nYou are not necessarily shy, unfriendly, or socially awkward.\nYou simply drawing your energy in a different way than others.`,
-				},
-				{
-					text: `You tend to be outgoing and naturally drawn towards other people, you love engaging in a multitude of social activities.\nYou are positive and cheerful in your outlook in life, taking risk is your thing since it rewards you with a feeling of fulfillment.`,
-				},
-				{
-					text: `You are having depression tendencies, it seems that you don't find things you enjoy the most as enjoyable habits. You spend most of your time alone and limits your interaction with other people.\nYou are prescribed to at least visit a psychologist to talk and verify this findings.`,
-				},
-				{
-					text: `You are having anxiety tendencies, it seems that you get easily overwhelmed by the things around you.\nYour productivity is sacrificed since you are afraid to perform the task at hand.\nThis could be due to your fear of not doing the task perfectly.\nYou are prescribed to at least visit a psychologist to talk and verify this findings.`,
-				},
-			];
-			const ratings = [
-				{
-					emotional_stability: generateNumber(80, 100),
-					will_power: generateNumber(60, 100),
-					modesty: generateNumber(80, 90),
-					harmony_flexibility: generateNumber(10, 40),
-					discipline: generateNumber(60, 100),
-					concentration: generateNumber(20, 40),
-					communicativeness: generateNumber(10, 30),
-					sociability: generateNumber(10, 20),
-				},
-				{
-					emotional_stability: generateNumber(80, 100),
-					will_power: generateNumber(90, 100),
-					modesty: generateNumber(90, 100),
-					harmony_flexibility: generateNumber(80, 100),
-					discipline: generateNumber(60, 100),
-					concentration: generateNumber(50, 100),
-					communicativeness: generateNumber(80, 100),
-					sociability: generateNumber(90, 100),
-				},
-				{
-					emotional_stability: generateNumber(0, 10),
-					will_power: generateNumber(0, 10),
-					modesty: generateNumber(90, 100),
-					harmony_flexibility: generateNumber(0, 10),
-					discipline: generateNumber(20, 30),
-					concentration: generateNumber(0, 10),
-					communicativeness: generateNumber(0, 20),
-					sociability: generateNumber(0, 10),
-				},
-				{
-					emotional_stability: generateNumber(10, 20),
-					will_power: generateNumber(10, 20),
-					modesty: generateNumber(90, 100),
-					harmony_flexibility: generateNumber(20, 40),
-					discipline: generateNumber(10, 30),
-					concentration: generateNumber(0, 10),
-					communicativeness: generateNumber(0, 20),
-					sociability: generateNumber(0, 10),
-				},
-			];
-			for (let count = 0; count < findings.length; count++) {
-				const dummy = {
-					ratings: ratings[count],
-					findings: findings[count],
-					interpretation: interpretation[count].text,
-				};
-				await DB.collection("dummy").add(dummy);
-			}
-		},
 		//The following actions below are created for findings generateion
 		async generateRecord({ rootGetters, state, commit, dispatch }) {
 			try {
@@ -192,10 +121,16 @@ export default {
 					root: true,
 				});
 
-				const randomIndex = generateInt(0, 3);
-				const { ratings, findings, interpretation } = state.dummies[
-					randomIndex
-				];
+				const results = await axios({
+					method: 'post',
+					url: process.env.VUE_APP_ML_API + '/analyze',
+					data: {
+						downloadURL,
+						filename: fileName
+					}
+				});
+
+				console.log(results);
 
 				const newFindings = {
 					title: days().format("MMM DD YYYY"),
@@ -204,9 +139,9 @@ export default {
 						? user.id
 						: null,
 					downloadURL,
-					ratings,
-					findings,
-					interpretation,
+					ratings: results.data,
+					findings: '',
+					interpretation: '',
 					fileName
 				};
 
@@ -222,6 +157,7 @@ export default {
 					id = deviceId;
 					dispatch("plugins/DISABLE_CAMERA", null, { root: true });
 				}
+
 				newFindings.id = id;
 				commit("ADD_RECORD", newFindings);
 				commit("SET_CURRENT_RECORD", newFindings);
