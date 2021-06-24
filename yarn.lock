@@ -3134,11 +3134,6 @@ address@^1.0.3, address@^1.1.2:
   resolved "https://registry.yarnpkg.com/address/-/address-1.1.2.tgz#bf1116c9c758c51b7a933d296b72c221ed9428b6"
   integrity sha512-aT6camzM4xEA54YVJYSqxz1kv4IHnQZRtThJJHhUMRExaU5spC7jX5ugSwTaTgJliIgs4VhZOk7htClvQ/LmRA==
 
-adm-zip@0.4.16:
-  version "0.4.16"
-  resolved "https://registry.yarnpkg.com/adm-zip/-/adm-zip-0.4.16.tgz#cf4c508fdffab02c269cbc7f471a875f05570365"
-  integrity sha512-TFi4HBKSGfIKsK5YCkKaaFG2m4PEDyViZmEwof3MTIgzimHLto6muaHVpbrljdIvIrFZzEq/p4nafOeLcYegrg==
-
 agent-base@6:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
@@ -4753,19 +4748,10 @@ copy-webpack-plugin@^5.1.1:
     serialize-javascript "^4.0.0"
     webpack-log "^2.0.0"
 
-cordova-plugin-document-scanner@^4.2.6:
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-document-scanner/-/cordova-plugin-document-scanner-4.2.6.tgz#1a7402f5743b359b337fc0a6929a8d85adce8ae5"
-  integrity sha512-XNKLLbrKx2GLv2iknvs30nt0viZruoSh+4/2NjxAUzHZNhNgGupNy5LlnFsBhpW6eYBgQZBkG/SlRGtXEWKY/g==
-
-cordova-plugin-scanbot-sdk@^4.10.0:
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-scanbot-sdk/-/cordova-plugin-scanbot-sdk-4.10.0.tgz#12ac02dd472d3df624c583b8bf83a98730b46541"
-  integrity sha512-Ng9kp6aiKmtBg2wJhLWYjm3/1cjXWD1aFTJ/amvkb+R091pXEU3KFV592KThkxUFrGGEbwq1+g+pUKh6/sXrdw==
-  dependencies:
-    adm-zip "0.4.16"
-    path "0.12.7"
-    request "2.88.2"
+cordova-plugin-document-scanner@@5.0.0-beta.0:
+  version "5.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-document-scanner/-/cordova-plugin-document-scanner-5.0.0-beta.1.tgz#b9fa6a387de7016afde29d856feeedb51b8cfa73"
+  integrity sha512-mLVBioue0ahW8jJ24w8iW49OXZIQATjjAlzAeAO/W5+u9KGuBhScsAFYshQHteBqMRVc+Vf1Y5Arj7b0JBXemg==
 
 core-js-compat@^3.14.0, core-js-compat@^3.9.1:
   version "3.14.0"
@@ -9465,14 +9451,6 @@ path-type@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
-path@0.12.7:
-  version "0.12.7"
-  resolved "https://registry.yarnpkg.com/path/-/path-0.12.7.tgz#d4dc2a506c4ce2197eb481ebfcd5b36c0140b10f"
-  integrity sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=
-  dependencies:
-    process "^0.11.1"
-    util "^0.10.3"
-
 pbkdf2@^3.0.3:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.1.1.tgz#cb8724b0fada984596856d1a6ebafd3584654b94"
@@ -9989,7 +9967,7 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-process@^0.11.1, process@^0.11.10:
+process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
@@ -10409,7 +10387,7 @@ request-promise-native@^1.0.7:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@2.88.2, request@^2.87.0, request@^2.88.2:
+request@^2.87.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -11991,13 +11969,6 @@ util@0.10.3:
   integrity sha1-evsa/lCAUkZInj23/g7TeTNqwPk=
   dependencies:
     inherits "2.0.1"
-
-util@^0.10.3:
-  version "0.10.4"
-  resolved "https://registry.yarnpkg.com/util/-/util-0.10.4.tgz#3aa0125bfe668a4672de58857d3ace27ecb76901"
-  integrity sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==
-  dependencies:
-    inherits "2.0.3"
 
 util@^0.11.0:
   version "0.11.1"

@@ -16,10 +16,8 @@ vue add capacitor
 - Choose Target Platforms: <press 'a' on your keyboard>
 - Your App's Name: Grapherson
 - Your App's ID: com.grapherson
-
 # Add Icon and Splash Screens
 yarn generate-icon-splash
-```
 
 ### Run app on android device
 ```

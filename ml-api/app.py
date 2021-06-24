@@ -7,11 +7,6 @@ import download_file
 
 app = Flask(__name__)
 CORS(app)
-cors = CORS(app, resource={
-    r"/*":{
-        "origins":"*"
-    }
-})
 
 @app.route('/', methods=['GET'])
 @cross_origin()
