@@ -11,16 +11,13 @@
 				</v-avatar>
 			</v-col>
 			<v-col cols="10" class="mt-n3">
-				<h1 class="headline primary--text text-uppercase mt-6">
-					{{ record.findings }}
+				<h1 class="headline font-weight-medium primary--text text-uppercase mt-6">
+					{{ 'Interpretation' }}
 				</h1>
 			</v-col>
 			<v-col cols="11" class="mt-n6">
 				<v-card rounded elevation="5" color="secondary darken-2" class="my-6">
-					<v-card-text>
-						<p class="text-subtitle-1 white--text">
-							{{ record.interpretation }}
-						</p>
+					<v-card-text class="text-subtitle-1 white--text" v-html="record.interpretation">
 					</v-card-text>
 				</v-card>
 			</v-col>

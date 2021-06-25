@@ -50,7 +50,7 @@
 							<span class="font-weight-bold">Edit this finding's title</span>
 						</v-btn>
 					</v-col>
-					<v-col xs="10" sm="10" md="3" lg="3" align="center">
+					<!-- <v-col xs="10" sm="10" md="3" lg="3" align="center">
 						<v-btn
 							rounded
 							color="error"
@@ -61,7 +61,7 @@
 						>
 							<span class="font-weight-bold">Delete this Findings</span>
 						</v-btn>
-					</v-col>
+					</v-col> -->
 				</v-row>
 			</v-container>
 			<v-dialog

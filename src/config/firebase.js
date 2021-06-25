@@ -16,7 +16,7 @@ const config = {
 
 if (!firebase.apps.length) {
 	firebase.initializeApp(config);
-	firebase.firestore().enablePersistence();
+	// firebase.firestore().enablePersistence();
 }
 
 export const AUTH = firebase.auth();

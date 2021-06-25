@@ -10,7 +10,8 @@
     "capacitor:serve": "vue-cli-service capacitor:serve",
     "dev": "yarn cap copy && yarn capacitor:serve --android",
     "dev-ios": "yarn cap copy && yarn capacitor:serve --ios",
-    "generate-icon-splash": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy",
+    "generate-icon-splash-android": "cordova-res android --skip-config --copy",
+    "generate-icon-splash-ios": "cordova-res ios --skip-config --copy",
     "start-api": "ml-api\\venv\\Scripts\\activate && python ml-api/app.py"
   },
   "dependencies": {
@@ -23,10 +24,10 @@
     "@ionic/pwa-elements": "^3.0.2",
     "@vue/cli": "^4.5.13",
     "axios": "^0.21.1",
-    "cordova-plugin-document-scanner": "^5.0.0-beta.0",
+    "cordova-plugin-document-scanner": "^4.2.6",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
-    "firebase": "^8.2.4",
+    "firebase": "^8.6.8",
     "global": "^4.4.0",
     "lodash": "^4.17.20",
     "lottie-player-vue": "^0.0.16",

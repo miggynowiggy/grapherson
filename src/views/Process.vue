@@ -31,7 +31,7 @@
 		},
 		data: () => ({
 			displayMessages: [
-				"Uploading your photo...",
+				"Analyzing your handwriting...",
 				"Clearing and brightening up your photo...",
 				"Extracting your personality...",
 				"Generating interpretation...",
@@ -57,20 +57,6 @@
 							resolve(true);
 						})
 						.catch(error => reject(error));
-
-					let stop = false;
-					let index = 0;
-					while (!stop) {
-						setTimeout(() => {
-							if (this.progress !== this.displayMessages.length - 1) {
-								this.progress = index;
-								index += 1;
-							} else {
-								this.progress = 0;
-								index = 0;
-							}
-						}, 1500);
-					}
 				})
 			}
 		},

@@ -121,7 +121,7 @@ export default {
 					root: true,
 				});
 
-				const results = await axios({
+				let results = await axios({
 					method: 'post',
 					url: process.env.VUE_APP_ML_API + '/analyze',
 					data: {
@@ -129,8 +129,52 @@ export default {
 						filename: fileName
 					}
 				});
-
+				results = results.data;
 				console.log(results);
+
+				const { emotional_stability, will_power, modesty,  harmony_flexibility, discipline, concentration, communicativeness, sociability } = results;
+
+				let interpretation = "";
+
+				if (emotional_stability) {
+					interpretation += `<p>You are composed, ordered, dependable, and you persevere. You are normally sensitive and healthy emotionally. Judgement and logic rules but you have sympathy and compassion. However, the mind disciplines your emotions so the range of expression is seldom over demonstrative.</p>`
+					interpretation += `<br />`;
+				}
+
+				if (will_power) {
+					interpretation += `<p>You are expected to adaptably fit into conventional or prevailing circumstances with a balance of mind.You are practical, realistic and the norm between extremes therefore, are the indication of healthy vitality and will power.</p>`
+					interpretation += `<br />`;
+				}
+
+				if (modesty) {
+					interpretation += `<p>You are an introspective person, you do not seek the limelight. You are modest and formally respective but you have the talent in detail and organizing and this gives you good executive ability.</p>`
+					interpretation += `<br />`;
+				}
+
+				if (harmony_flexibility) {
+					interpretation += `<p>You have personal harmony, flexibility, social maturity, intelligence, and inner organization with an objective way of dealing with yourself and with other people.</p>`
+					interpretation += `<br />`;
+				}
+
+				if (discipline) {
+					interpretation += `<p>You have a direct approach to things but you leave things open so that you will be able to change your mind later on. You are unpredictable and excitable but you are also indifferent.</p>`
+					interpretation += `<br />`;
+				}
+
+				if (concentration) {
+					interpretation += `<p>You are bold, enthusiastic, optimistic, lively, and often creative. You need to win recognition and to be observed to make an impression so you constantly express yourself in words, actions, and projects.</p>`
+					interpretation += `<br />`;
+				}
+
+				if (communicativeness) {
+					interpretation += `<p>You are a very private person and usually communicate with your close friends only all the while maintaining your distance</p>`
+					interpretation += `<br />`;
+				}
+
+				if (sociability) {
+					interpretation += `<p>You value personal space and would like to spend most of the day in isolation for self discovery. It can also be interpreted that lately you have been spending much of your time in loneliness due to anxiety or boredom. But there are still great things ahead of your life. </p>`
+					interpretation += `<br />`;
+				}
 
 				const newFindings = {
 					title: days().format("MMM DD YYYY"),
@@ -139,9 +183,9 @@ export default {
 						? user.id
 						: null,
 					downloadURL,
-					ratings: results.data,
-					findings: '',
-					interpretation: '',
+					ratings: results,
+					findings: `You're doing great!`,
+					interpretation: interpretation,
 					fileName
 				};
 

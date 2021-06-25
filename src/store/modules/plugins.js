@@ -54,21 +54,17 @@ export default {
 				});
 				console.log(image);
 				commit("SET_CAPTURED_PHOTO", image.base64String);
-				return image.dataUrl;
+				return image.base64String;
 			}
 
 			return new Promise((resolve, reject) => {
 				scan.scanDoc(
 					async (img) => {
-						console.log('CAPTURED PHOTO: ', img);
-						const image = await Filesystem.readFile({
-							path: img
-						});
-						commit("SET_CAPTURED_PHOTO", image);
-						resolve(image);
+						commit("SET_CAPTURED_PHOTO", img);
+						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 1, quality: 3 }
+					{ sourceType: 1, returnBase64: true, quality: 2 }
 				)
 			});
 		},
@@ -81,20 +77,17 @@ export default {
 					format: "png",
 				});
 				commit("SET_CAPTURED_PHOTO", image.base64String);
-				return image.dataUrl;
+				return image.base64String;
 			}
 
 			return new Promise((resolve, reject) => {
 				scan.scanDoc(
 					async (img) => {
-						const image = await Filesystem.readFile({
-							path: img
-						});
-						commit("SET_CAPTURED_PHOTO", image);
-						resolve(image);
+						commit("SET_CAPTURED_PHOTO", img);
+						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 0, quality: 3 }
+					{ sourceType: 0, returnBase64: true, quality: 1 }
 				)
 			});
 		},

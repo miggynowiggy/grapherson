@@ -72,8 +72,8 @@ def straighten(image):
     dilated = dilate(thresh, (5 ,100))
     #cv2.imshow('dilated',dilated)
 
-    ctrs, hiers, im = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    # ctrs,hier = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # ctrs, hiers, im = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    ctrs, hier = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # line called im2,ctrs,hier before
 
     for i, ctr in enumerate(ctrs):
