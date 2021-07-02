@@ -8,7 +8,7 @@ import cv2
 #   print(savedFile)
 #   return 'imgs/' + str(filename)
 
-def start(filename, downloadURL):
+def start(downloadURL):
   img = io.imread(downloadURL)
   img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
   return img

@@ -4,7 +4,6 @@ from flask_cors import CORS, cross_origin
 import train_predict
 import download_file
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -16,18 +15,12 @@ def hello_world():
 @app.route('/analyze', methods=['POST'])
 @cross_origin()
 def analyze():
-    filename = request.json['filename']
     downloadURL = request.json['downloadURL']
-    print(filename, downloadURL)
-
-    if not filename:
-        return jsonify({ 'message': 'missing filename' }), 400
 
     if not downloadURL:
         return jsonify({ 'message': 'missing downloadURL' }), 400
 
-
-    savedFile = download_file.start(filename, downloadURL)
+    savedFile = download_file.start(downloadURL)
     results = train_predict.start(savedFile)
     # os.remove(savedFile)
     return jsonify(results), 200

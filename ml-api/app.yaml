@@ -1,6 +1,2 @@
 runtime: python37
 entrypoint: python app.py
-
-env_variables:
-  FLASK_APP: 'app.py'
-  FLASK_ENV: 'production'
