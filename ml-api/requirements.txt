@@ -5,3 +5,4 @@ scikit-learn
 scikit-image
 flask
 flask-cors
+gunicorn
