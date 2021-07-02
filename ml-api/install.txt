@@ -1,9 +1,0 @@
-HOW TO RUN THE ML API
-> cd ml-api
-> python3 -m venv venv
-> venv\Scripts\activate
-> pip install -r requirements.txt
-
-
-HOW TO DEPLOY TO APP ENGINE
-gcloud app deploy --project grapherson-afb69
