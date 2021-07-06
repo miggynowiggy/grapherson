@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Grapherson</string>
+    <string name="title_activity_main">Grapherson</string>
+    <string name="package_name">com.grapherson</string>
+    <string name="custom_url_scheme">com.grapherson</string>
+</resources>
