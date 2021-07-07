@@ -4,7 +4,7 @@
 import { Plugins, CameraResultType } from "@capacitor/core";
 import { STORAGE, AUTH } from "../../config/firebase";
 import { nanoid } from "nanoid";
-const { Camera, Storage, Filesystem } = Plugins;
+const { Camera, Storage } = Plugins;
 
 const bucket = STORAGE.ref("handwritings");
 const avatarBucket = STORAGE.ref("avatars");

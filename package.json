@@ -35,7 +35,7 @@
     "typeface-poppins": "^1.1.13",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vuetify": "^2.2.11",
+    "vuetify": "^2.5.6",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
