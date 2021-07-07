@@ -123,14 +123,15 @@ export default {
 
 				let results = await axios({
 					method: 'post',
-					url: process.env.VUE_APP_ML_API + '/analyze',
+					url: 'http://34.70.231.88/analyze',
 					data: {
 						downloadURL,
 						filename: fileName
-					}
+					},
+					timeout: 60000 * 2
 				});
 				results = results.data;
-				console.log(results);
+				console.log('ML API RESULTS: ', results);
 
 				const { emotional_stability, will_power, modesty,  harmony_flexibility, discipline, concentration, communicativeness, sociability } = results;
 

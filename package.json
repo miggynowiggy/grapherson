@@ -11,8 +11,7 @@
     "dev": "yarn cap copy && yarn capacitor:serve --android",
     "dev-ios": "yarn cap copy && yarn capacitor:serve --ios",
     "generate-icon-splash-android": "cordova-res android --skip-config --copy",
-    "generate-icon-splash-ios": "cordova-res ios --skip-config --copy",
-    "start-api": "ml-api\\venv\\Scripts\\activate && python ml-api/app.py"
+    "generate-icon-splash-ios": "cordova-res ios --skip-config --copy"
   },
   "dependencies": {
     "@capacitor/android": "^2.4.6",

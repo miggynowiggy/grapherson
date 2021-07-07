@@ -64,7 +64,7 @@ export default {
 						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 1, returnBase64: true, quality: 2 }
+					{ sourceType: 1, returnBase64: true, quality: 2.5 }
 				)
 			});
 		},
@@ -87,7 +87,7 @@ export default {
 						resolve(img);
 					},
 					(err) => reject(err),
-					{ sourceType: 0, returnBase64: true, quality: 1 }
+					{ sourceType: 0, returnBase64: true, quality: 2.5 }
 				)
 			});
 		},
