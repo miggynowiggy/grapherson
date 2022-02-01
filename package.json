@@ -30,7 +30,7 @@
     "global": "^4.4.0",
     "lodash": "^4.17.20",
     "lottie-player-vue": "^0.0.16",
-    "nanoid": "^3.1.20",
+    "nanoid": "^3.1.31",
     "register-service-worker": "^1.7.1",
     "typeface-poppins": "^1.1.13",
     "vue": "^2.6.11",
