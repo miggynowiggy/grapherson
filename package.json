@@ -22,7 +22,7 @@
     "@ionic-native/document-scanner": "^5.33.1",
     "@ionic/pwa-elements": "^3.0.2",
     "@vue/cli": "^4.5.13",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "cordova-plugin-document-scanner": "^4.2.6",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
